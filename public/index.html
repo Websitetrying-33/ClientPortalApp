@@ -1,416 +1,45 @@
-<!DOCTYPE html>
-<html lang="en" class="h-full">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Executive Portal | Client Command Center</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-    </style>
-</head>
-<body class="bg-slate-900 text-slate-100 h-full flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
-
-    <!-- Top Executive Navigation Bar -->
-    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between py-4">
-            <div class="flex items-center space-x-3.5">
-                <div class="h-11 w-11 bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-indigo-500/20 ring-1 ring-white/10">
-                    C
-                </div>
-                <div>
-                    <h1 class="text-base font-bold text-white tracking-tight leading-tight">Client Command Center</h1>
-                    <p class="text-xs text-indigo-400 font-medium">Executive Client Portal &bull; Sydney Operations</p>
-                </div>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div class="hidden sm:flex flex-col text-right">
-                    <span class="text-xs font-semibold text-slate-300">Active Workspace</span>
-                    <span class="text-[11px] text-emerald-400 font-medium">Sydney Time (AEST)</span>
-                </div>
-                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="h-2 w-2 mr-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)]"></span>
-                    Secure Link Active
-                </span>
-            </div>
+<!-- Sa loob ng Contracts Section ng index.html mo -->
+<div class="space-y-3">
+    <!-- Contract 1 -->
+    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
+        <div>
+            <h4 class="font-semibold text-gray-800">Q3-Q4 Influencer & Content Licensing Addendum</h4>
+            <p class="text-sm text-green-600">✔ Signed & Verified (2026-01-10)</p>
         </div>
-    </header>
+        <button onclick="openContractModal('Q3-Q4 Influencer & Content Licensing Addendum', '2026-01-10', 'addendum')" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition">
+            View Contract
+        </button>
+    </div>
 
-    <!-- Main Workspace Grid -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-6">
-        
-        <!-- Top Banner / Welcome Row -->
-        <div class="bg-gradient-to-r from-slate-800/80 to-slate-800/40 border border-slate-700/60 rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-                <h2 class="text-xl font-bold text-white tracking-tight">Welcome back, Partner 👋</h2>
-                <p class="text-sm text-slate-400 mt-1">Here is your real-time campaign performance, active deliverables, and operational hub.</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <button onclick="loadDashboard()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold py-2.5 px-4 rounded-xl transition-all border border-slate-600 flex items-center gap-2">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    Sync Live Data
-                </button>
-            </div>
+    <!-- Contract 2 -->
+    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
+        <div>
+            <h4 class="font-semibold text-gray-800">Master Service Agreement & NDA (Sydney Agency)</h4>
+            <p class="text-sm text-green-600">✔ Signed & Verified (2025-10-15)</p>
         </div>
+        <button onclick="openContractModal('Master Service Agreement & NDA (Sydney Agency)', '2025-10-15', 'msa')" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition">
+            View Contract
+        </button>
+    </div>
+</div>
 
-        <!-- Main Grid for 6 Core Modules -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <!-- 1. Invoicing & Billing -->
-            <div class="bg-slate-800/60 backdrop-blur-sm border border-slate-700/70 rounded-2xl p-6 shadow-lg flex flex-col justify-between hover:border-indigo-500/50 transition-all duration-300">
-                <div>
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-700/60">
-                        <h3 class="font-semibold text-slate-200 text-sm flex items-center gap-2.5">
-                            <span class="p-2 bg-indigo-500/10 text-indigo-400 rounded-lg border border-indigo-500/20">💳</span> 
-                            1. Invoicing & Billing
-                        </h3>
-                    </div>
-                    <div id="invoice-box" class="mt-4 text-sm space-y-2.5 text-slate-300">
-                        <p class="italic text-slate-500 text-center py-4">Loading financial records...</p>
-                    </div>
-                </div>
-                <button onclick="editInvoicePrompt()" class="mt-6 w-full bg-slate-700/50 hover:bg-indigo-600 text-slate-300 hover:text-white text-xs font-semibold py-2.5 px-3 rounded-xl transition-all border border-slate-600/60">
-                    Edit Billing Details
-                </button>
-            </div>
-
-            <!-- 2. Agreements & E-Signatures -->
-            <div class="bg-slate-800/60 backdrop-blur-sm border border-slate-700/70 rounded-2xl p-6 shadow-lg flex flex-col justify-between hover:border-indigo-500/50 transition-all duration-300">
-                <div>
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-700/60">
-                        <h3 class="font-semibold text-slate-200 text-sm flex items-center gap-2.5">
-                            <span class="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">✍️</span> 
-                            2. Agreements & Contracts
-                        </h3>
-                    </div>
-                    <div id="contracts-box" class="mt-4 text-sm space-y-3 text-slate-300 max-h-40 overflow-y-auto pr-1">
-                        <p class="italic text-slate-500 text-center py-4">Loading agreements...</p>
-                    </div>
-                </div>
-                <button onclick="addContractPrompt()" class="mt-6 w-full bg-slate-700/50 hover:bg-indigo-600 text-slate-300 hover:text-white text-xs font-semibold py-2.5 px-3 rounded-xl transition-all border border-slate-600/60">
-                    + Upload Agreement
-                </button>
-            </div>
-
-            <!-- 3. Video Creative Feedback -->
-            <div class="bg-slate-800/60 backdrop-blur-sm border border-slate-700/70 rounded-2xl p-6 shadow-lg flex flex-col justify-between hover:border-indigo-500/50 transition-all duration-300">
-                <div>
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-700/60">
-                        <h3 class="font-semibold text-slate-200 text-sm flex items-center gap-2.5">
-                            <span class="p-2 bg-violet-500/10 text-violet-400 rounded-lg border border-violet-500/20">🎬</span> 
-                            3. Video Feedback & Approvals
-                        </h3>
-                    </div>
-                    <div id="videos-box" class="mt-4 text-sm space-y-3 text-slate-300 max-h-40 overflow-y-auto pr-1">
-                        <p class="italic text-slate-500 text-center py-4">Loading media assets...</p>
-                    </div>
-                </div>
-                <button onclick="addVideoPrompt()" class="mt-6 w-full bg-slate-700/50 hover:bg-indigo-600 text-slate-300 hover:text-white text-xs font-semibold py-2.5 px-3 rounded-xl transition-all border border-slate-600/60">
-                    + Add New Video Asset
-                </button>
-            </div>
-
-            <!-- 4. Content Calendar & Schedule -->
-            <div class="bg-slate-800/60 backdrop-blur-sm border border-slate-700/70 rounded-2xl p-6 shadow-lg flex flex-col justify-between hover:border-indigo-500/50 transition-all duration-300">
-                <div>
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-700/60">
-                        <h3 class="font-semibold text-slate-200 text-sm flex items-center gap-2.5">
-                            <span class="p-2 bg-amber-500/10 text-amber-400 rounded-lg border border-amber-500/20">📅</span> 
-                            4. Content Calendar
-                        </h3>
-                    </div>
-                    <div id="schedule-box" class="mt-4 text-sm space-y-2.5 text-slate-300 max-h-40 overflow-y-auto pr-1">
-                        <p class="italic text-slate-500 text-center py-4">Loading schedule...</p>
-                    </div>
-                </div>
-                <button onclick="addSchedulePrompt()" class="mt-6 w-full bg-slate-700/50 hover:bg-indigo-600 text-slate-300 hover:text-white text-xs font-semibold py-2.5 px-3 rounded-xl transition-all border border-slate-600/60">
-                    + Add Scheduled Post
-                </button>
-            </div>
-
-            <!-- 5. Task & Project Milestones -->
-            <div class="bg-slate-800/60 backdrop-blur-sm border border-slate-700/70 rounded-2xl p-6 shadow-lg flex flex-col justify-between hover:border-indigo-500/50 transition-all duration-300">
-                <div>
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-700/60">
-                        <h3 class="font-semibold text-slate-200 text-sm flex items-center gap-2.5">
-                            <span class="p-2 bg-cyan-500/10 text-cyan-400 rounded-lg border border-cyan-500/20">🚀</span> 
-                            5. Tasks & Milestones
-                        </h3>
-                    </div>
-                    <div id="tasks-box" class="mt-4 text-sm space-y-2.5 text-slate-300 max-h-40 overflow-y-auto pr-1">
-                        <p class="italic text-slate-500 text-center py-4">Loading project tasks...</p>
-                    </div>
-                </div>
-                <button onclick="addTaskPrompt()" class="mt-6 w-full bg-slate-700/50 hover:bg-indigo-600 text-slate-300 hover:text-white text-xs font-semibold py-2.5 px-3 rounded-xl transition-all border border-slate-600/60">
-                    + Add New Task
-                </button>
-            </div>
-
-            <!-- 6. Lead Pipeline & ROI Analytics -->
-            <div class="bg-slate-800/60 backdrop-blur-sm border border-slate-700/70 rounded-2xl p-6 shadow-lg flex flex-col justify-between hover:border-indigo-500/50 transition-all duration-300">
-                <div>
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-700/60">
-                        <h3 class="font-semibold text-slate-200 text-sm flex items-center gap-2.5">
-                            <span class="p-2 bg-rose-500/10 text-rose-400 rounded-lg border border-rose-500/20">📊</span> 
-                            6. Lead Pipeline & ROI
-                        </h3>
-                    </div>
-                    <div id="leads-box" class="mt-4 text-sm space-y-3 text-slate-300">
-                        <p class="italic text-slate-500 text-center py-4">Loading performance metrics...</p>
-                    </div>
-                </div>
-                <button onclick="updateLeadsPrompt()" class="mt-6 w-full bg-slate-700/50 hover:bg-indigo-600 text-slate-300 hover:text-white text-xs font-semibold py-2.5 px-3 rounded-xl transition-all border border-slate-600/60">
-                    Update Campaign Metrics
-                </button>
-            </div>
-
+<!-- MODAL POPUP HTML (Idagdag ito sa pinakadulo ng <body> ng index.html mo) -->
+<div id="contractModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+            <h3 id="modalTitle" class="text-lg font-bold text-gray-900">Contract Title</h3>
+            <button onclick="closeContractModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
         </div>
-
-        <!-- 7 & 8. Brand Asset Storage & Reporting Vault -->
-        <div class="bg-slate-800/60 backdrop-blur-sm border border-slate-700/70 rounded-2xl p-6 shadow-lg">
-            <div class="flex items-center justify-between pb-4 border-b border-slate-700/60">
-                <h3 class="font-semibold text-slate-200 text-sm flex items-center gap-2.5">
-                    <span class="p-2 bg-blue-500/10 text-blue-400 rounded-lg border border-blue-500/20">📂</span> 
-                    7 & 8. Brand Asset Storage & Reporting Vault
-                </h3>
-                <button onclick="addAssetPrompt()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 px-4 rounded-xl transition-all shadow-md shadow-indigo-600/30">
-                    + Upload Asset
-                </button>
-            </div>
-            <div id="assets-box" class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <p class="italic text-slate-500 text-sm py-4">Loading brand assets & reports vault...</p>
-            </div>
+        <div id="modalBody" class="overflow-y-auto flex-grow text-sm text-gray-700 space-y-4 pr-2 bg-gray-50 p-4 rounded-lg border">
+            <!-- Dito papasok ang buong teksto ng kontrata -->
         </div>
-
-    </main>
-
-    <!-- Executive Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800 py-6 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
-            Client Command Center &bull; Built for High-Performance Sydney Marketing Agencies
+        <div class="border-t pt-4 mt-4 flex justify-end space-x-3">
+            <a id="downloadBtn" href="#" target="_blank" class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition">
+                Download PDF Copy
+            </a>
+            <button onclick="closeContractModal()" class="px-4 py-2 bg-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-400 transition">
+                Close
+            </button>
         </div>
-    </footer>
-
-    <!-- Frontend Scripting -->
-    <script>
-        async function loadDashboard() {
-            try {
-                const res = await fetch('/api/all-data');
-                const data = await res.json();
-
-                // 1. Invoices
-                if(data.invoice) {
-                    document.getElementById('invoice-box').innerHTML = `
-                        <div class="flex justify-between items-center"><span class="text-slate-400">Reference:</span> <span class="font-medium text-white">${data.invoice.invoiceRef}</span></div>
-                        <div class="flex justify-between items-center"><span class="text-slate-400">Period:</span> <span class="font-medium text-slate-200 text-xs">${data.invoice.billingPeriod}</span></div>
-                        <div class="pt-1"><span class="text-slate-400 text-xs block mb-1">Scope of Work:</span> <p class="text-xs text-slate-300 bg-slate-900/50 p-2 rounded-lg border border-slate-700/40">${data.invoice.scope}</p></div>
-                        <div class="flex justify-between items-center pt-2 border-t border-slate-700/40 mt-2">
-                            <span class="font-semibold text-white">Total Amount:</span> 
-                            <span class="font-bold text-emerald-400 text-base">${data.invoice.amount}</span>
-                        </div>
-                        <div class="mt-2"><span class="inline-block px-2.5 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[11px] font-semibold rounded-md">Status: ${data.invoice.status}</span></div>
-                    `;
-                }
-
-                // 2. Contracts
-                if(data.contracts) {
-                    document.getElementById('contracts-box').innerHTML = data.contracts.map(c => `
-                        <div class="bg-slate-900/40 p-3 rounded-xl border border-slate-700/40">
-                            <p class="font-medium text-white text-xs">${c.title}</p>
-                            <p class="text-[11px] text-emerald-400 mt-1 flex items-center gap-1">✔ ${c.status} <span class="text-slate-500">(${c.signedDate})</span></p>
-                        </div>
-                    `).join('');
-                }
-
-                // 3. Videos
-                if(data.videos) {
-                    document.getElementById('videos-box').innerHTML = data.videos.map(v => `
-                        <div class="flex justify-between items-center bg-slate-900/40 p-3 rounded-xl border border-slate-700/40">
-                            <span class="truncate max-w-[160px] text-xs text-slate-200" title="${v.title}">${v.title}</span>
-                            <button onclick="updateVideoStatus(${v.id}, '${v.status}')" class="text-[11px] bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 font-semibold px-2.5 py-1 rounded-lg transition-all">
-                                ${v.status}
-                            </button>
-                        </div>
-                    `).join('');
-                }
-
-                // 4. Schedule
-                if(data.schedule) {
-                    document.getElementById('schedule-box').innerHTML = data.schedule.map(s => `
-                        <div class="bg-slate-900/40 p-3 rounded-xl border border-slate-700/40 text-xs">
-                            <div class="flex justify-between items-center">
-                                <span class="font-bold text-indigo-400">[${s.platform}]</span>
-                                <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">${s.status}</span>
-                            </div>
-                            <p class="text-slate-200 mt-1.5 font-medium">${s.postTitle}</p>
-                            <p class="text-[11px] text-slate-400 mt-1">🗓️ ${s.scheduleDate}</p>
-                        </div>
-                    `).join('');
-                }
-
-                // 5. Tasks
-                if(data.tasks) {
-                    document.getElementById('tasks-box').innerHTML = data.tasks.map(t => `
-                        <div class="flex justify-between items-center bg-slate-900/40 p-3 rounded-xl border border-slate-700/40 text-xs">
-                            <div>
-                                <span class="font-medium text-slate-200 block">${t.title}</span>
-                                <span class="inline-block mt-1 px-2 py-0.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[10px] rounded">${t.priority} Priority</span>
-                            </div>
-                            <span class="text-cyan-400 font-semibold bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20 text-[11px]">${t.status}</span>
-                        </div>
-                    `).join('');
-                }
-
-                // 6. Leads
-                if(data.leads) {
-                    document.getElementById('leads-box').innerHTML = `
-                        <div class="grid grid-cols-3 gap-2 text-center bg-slate-900/40 p-3.5 rounded-xl border border-slate-700/40">
-                            <div>
-                                <p class="text-[11px] text-slate-400">Qualified</p>
-                                <p class="font-bold text-white text-sm mt-1">${data.leads.qualifiedLeads}</p>
-                            </div>
-                            <div>
-                                <p class="text-[11px] text-slate-400">Calls Booked</p>
-                                <p class="font-bold text-white text-sm mt-1">${data.leads.bookedCalls}</p>
-                            </div>
-                            <div>
-                                <p class="text-[11px] text-slate-400">Campaign ROI</p>
-                                <p class="font-bold text-emerald-400 text-sm mt-1">${data.leads.roi}</p>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                // 7 & 8. Assets
-                if(data.assets) {
-                    document.getElementById('assets-box').innerHTML = data.assets.map(a => `
-                        <div class="bg-slate-900/40 border border-slate-700/40 p-4 rounded-xl flex items-center justify-between">
-                            <div>
-                                <p class="font-medium text-slate-200 text-xs">${a.fileName}</p>
-                                <p class="text-[11px] text-slate-400 mt-0.5">Size: ${a.fileSize}</p>
-                            </div>
-                            <a href="${a.fileUrl}" target="_blank" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-3 py-1.5 rounded-lg transition-all shadow-sm">Access</a>
-                        </div>
-                    `).join('');
-                }
-
-            } catch (err) {
-                console.error("Error loading dashboard data:", err);
-            }
-        }
-
-        // Action Prompts
-        async function editInvoicePrompt() {
-            const ref = prompt("Enter Invoice Ref:", "MYOB-INV-2026-088");
-            const period = prompt("Enter Billing Period:", "August – September 2026");
-            const scope = prompt("Enter Scope of Work:", "Social Media Management & Lead Ads Scale");
-            const amount = prompt("Enter Amount (e.g., AUD $4,850.00):", "AUD $4,850.00");
-            if(ref) {
-                await fetch('/api/invoice', {
-                    method: 'PUT',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ invoiceRef: ref, billingPeriod: period, scope: scope, amount: amount })
-                });
-                loadDashboard();
-            }
-        }
-
-        async function addContractPrompt() {
-            const title = prompt("Agreement Title:");
-            const signedDate = prompt("Signed Date (YYYY-MM-DD):", "2026-08-27");
-            if(title) {
-                await fetch('/api/contract', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ title, status: 'Signed & Verified', signedDate })
-                });
-                loadDashboard();
-            }
-        }
-
-        async function addVideoPrompt() {
-            const title = prompt("Video Title / File Name (e.g., Reel #14 - Sydney Promo.mp4):");
-            if(title) {
-                await fetch('/api/video', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ title, status: 'Pending Review' })
-                });
-                loadDashboard();
-            }
-        }
-
-        async function updateVideoStatus(id, currentStatus) {
-            const newStatus = currentStatus === 'Pending Review' ? 'Approved ✓' : 'Pending Review';
-            await fetch('/api/video/status', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ id, status: newStatus })
-            });
-            loadDashboard();
-        }
-
-        async function addSchedulePrompt() {
-            const platform = prompt("Platform (e.g., Instagram, TikTok, LinkedIn):", "Instagram");
-            const postTitle = prompt("Post Title / Topic:");
-            if(platform && postTitle) {
-                await fetch('/api/schedule', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ platform, postTitle, scheduleDate: 'Next Week AEST', status: 'Ready' })
-                });
-                loadDashboard();
-            }
-        }
-
-        async function addTaskPrompt() {
-            const title = prompt("Task Description:");
-            const priority = prompt("Priority (High, Normal, Low):", "High");
-            if(title) {
-                await fetch('/api/tasks', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ title, priority, status: 'In Progress' })
-                });
-                loadDashboard();
-            }
-        }
-
-        async function updateLeadsPrompt() {
-            const qualifiedLeads = prompt("Qualified Leads count:", "184 (+24%)");
-            const bookedCalls = prompt("Booked Calls:", "42 (82% show rate)");
-            const roi = prompt("Campaign ROI:", "5.4x");
-            if(qualifiedLeads) {
-                await fetch('/api/leads', {
-                    method: 'PUT',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ qualifiedLeads, bookedCalls, roi })
-                });
-                loadDashboard();
-            }
-        }
-
-        async function addAssetPrompt() {
-            const fileName = prompt("Asset File Name (e.g., Q3_Report.pdf):");
-            const fileSize = prompt("File Size (e.g., 3.4 MB):", "2.5 MB");
-            if(fileName) {
-                await fetch('/api/assets', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ fileName, fileSize, fileUrl: '#' })
-                });
-                loadDashboard();
-            }
-        }
-
-        loadDashboard();
-    </script>
-</body>
-</html>
+    </div>
+</div>
