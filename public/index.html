@@ -73,7 +73,7 @@
                         <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-2">
                             <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Active Retainer</p>
                             <h3 class="text-2xl font-bold text-white">$4,850.00 <span class="text-xs font-normal text-slate-400">AUD / mo</span></h3>
-                            <p class="text-[11px] text-emerald-400">Next billing: Sep 27, 2026</p>
+                            <p class="text-[11px] text-emerald-400">Next billing: 27 Sep 2026</p>
                         </div>
                         <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-2">
                             <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Pending Tasks</p>
@@ -143,15 +143,18 @@
                     <h3 class="text-sm font-bold text-white">Lead Pipeline & Onboarding Status</h3>
                     <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl text-xs text-slate-300">
                         <p class="font-semibold text-white">Active Campaign Lead Generation Status</p>
-                        <p class="text-slate-400 mt-1">All lead forms synced via Meta CAPI and Zapier pipelines to Sydney CRM.</p>
+                        <p class="text-slate-400 mt-1">All lead forms synchronised via Meta CAPI and Zapier pipelines to Sydney CRM.</p>
                     </div>
                 </div>
 
                 <!-- 8. BRAND ASSETS TAB -->
                 <div id="tab-assets" class="space-y-4 hidden">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-sm font-bold text-white">Dropbox Brand Assets & Cloud Storage</h3>
-                        <label class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded text-xs font-semibold cursor-pointer flex items-center gap-1.5">
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Dropbox Brand Assets & Cloud Storage</h3>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Directly connected to client Dropbox repository. Uploaded files appear instantly below.</p>
+                        </div>
+                        <label class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded text-xs font-semibold cursor-pointer flex items-center gap-1.5 transition-colors">
                             <i class="fa-solid fa-upload"></i> Upload Asset
                             <input type="file" onchange="uploadNewAsset(event)" class="hidden">
                         </label>
@@ -175,7 +178,7 @@
             </div>
             <div>
                 <label class="text-xs text-slate-400 font-medium">Notes / Instructions</label>
-                <textarea id="taskNotesInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-20" placeholder="Maglagay ng example o notes para hindi makalimutan..."></textarea>
+                <textarea id="taskNotesInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-20" placeholder="Enter notes or examples..."></textarea>
             </div>
             <div>
                 <label class="text-xs text-slate-400 font-medium">Status / Column</label>
@@ -261,7 +264,7 @@
             <div>
                 <p id="revisionVideoTitle" class="text-xs text-blue-400 font-semibold mb-2"></p>
                 <label class="block text-xs text-slate-400 mb-1">Revision Notes / Feedback</label>
-                <textarea id="revisionNotesInput" rows="4" class="w-full bg-slate-900 border border-slate-800 rounded p-2.5 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Ilagay ang mga gustong baguhin o i-edit sa video..."></textarea>
+                <textarea id="revisionNotesInput" rows="4" class="w-full bg-slate-900 border border-slate-800 rounded p-2.5 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Enter changes or feedback for the video..."></textarea>
             </div>
             <div class="flex justify-end gap-2 pt-2">
                 <button onclick="closeRevisionModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 rounded font-semibold">Cancel</button>
@@ -276,7 +279,7 @@
         function updateLiveClock() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            const dateString = now.toLocaleDateString('en-AU', { month: 'short', day: 'numeric', year: 'numeric' });
+            const dateString = now.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
             document.getElementById('clock-text').innerText = `${dateString} • ${timeString} AEST`;
         }
         setInterval(updateLiveClock, 1000);
@@ -285,25 +288,30 @@
         // Main Application State Data
         let appData = {
             invoices: [
-                { id: 'INV-2026-088', desc: 'August Social Media Retainer & Ads', amount: '$4,850.00', notes: 'Include MYOB direct bank transfer receipt upon payment.', timestamp: 'Aug 27, 2026, 09:15 AM', status: 'Pending Payment' },
-                { id: 'INV-2026-071', desc: 'July Social Media Retainer', amount: '$4,850.00', notes: 'Settled via corporate wire transfer.', timestamp: 'Jul 27, 2026, 10:00 AM', status: 'Paid' }
+                { id: 'INV-2026-088', desc: 'August Social Media Retainer & Ads', amount: '$4,850.00', notes: 'Include MYOB direct bank transfer receipt upon payment.', timestamp: '27 Aug 2026, 09:15 AM', status: 'Pending Payment' },
+                { id: 'INV-2026-071', desc: 'July Social Media Retainer', amount: '$4,850.00', notes: 'Settled via corporate wire transfer.', timestamp: '27 Jul 2026, 10:00 AM', status: 'Paid' }
             ],
             contracts: [
-                { title: 'Master Service Agreement (MSA) - FY2026-2027', date: 'October 15, 2025', timestamp: 'Oct 15, 2025, 02:30 PM', text: '1. PARTIES: Apex Media Agency (Sydney, Australia) and Client Partner.\n2. SCOPE: Short-form video creation, campaign scheduling, lead generation.\n3. TERMS: Net-30 via MYOB settlement.' },
-                { title: 'Q3-Q4 Influencer & Content Licensing Addendum', date: 'January 10, 2026', timestamp: 'Jan 10, 2026, 11:00 AM', text: '1. LICENSING: Creator grants non-exclusive distribution rights across Meta & TikTok.\n2. COMPENSATION: Locked per retainer agreement.' }
+                { title: 'Master Service Agreement (MSA) - FY2026-2027', date: '15 October 2025', timestamp: '15 Oct 2025, 02:30 PM', text: '1. PARTIES: Apex Media Agency (Sydney, Australia) and Client Partner.\n2. SCOPE: Short-form video creation, campaign scheduling, lead generation.\n3. TERMS: Net-30 via MYOB settlement.' },
+                { title: 'Q3-Q4 Influencer & Content Licensing Addendum', date: '10 January 2026', timestamp: '10 Jan 2026, 11:00 AM', text: '1. LICENSING: Creator grants non-exclusive distribution rights across Meta & TikTok.\n2. COMPENSATION: Locked per retainer agreement.' }
             ],
             videos: [
-                { id: 'vid-1', title: 'Reel #12 - Bondi Beach Lifestyle Promo (v2)', notes: 'Please check hook timing and brighten the lighting at 0:03.', status: 'Revision Requested', timestamp: 'Aug 26, 2026, 04:45 PM', file: 'Reel_12_Bondi.mp4' },
-                { id: 'vid-2', title: 'Client UGC Testimonial - Sydney CBD Shoot', notes: 'Approved for paid ad scaling.', status: 'Approved ✓', timestamp: 'Aug 25, 2026, 01:20 PM', file: 'UGC_Sydney.mp4' }
+                { id: 'vid-1', title: 'Reel #12 - Bondi Beach Lifestyle Promo (v2)', notes: 'Please check hook timing and brighten the lighting at 0:03.', status: 'Revision Requested', timestamp: '26 Aug 2026, 04:45 PM', file: 'Reel_12_Bondi.mp4' },
+                { id: 'vid-2', title: 'Client UGC Testimonial - Sydney CBD Shoot', notes: 'Approved for paid ad scaling.', status: 'Approved ✓', timestamp: '25 Aug 2026, 01:20 PM', file: 'UGC_Sydney.mp4' }
             ],
             calendar: [
-                { date: 'Aug 30, 2026', title: 'Behind-the-Scenes Reel: Sydney Office Launch', platform: 'Instagram', status: 'Scheduled' },
-                { date: 'Sep 02, 2026', title: 'Top 3 Social Media Mistakes', platform: 'TikTok', status: 'Pending Approval' }
+                { date: '30 Aug 2026', title: 'Behind-the-Scenes Reel: Sydney Office Launch', platform: 'Instagram', status: 'Scheduled' },
+                { date: '02 Sep 2026', title: 'Top 3 Social Media Mistakes', platform: 'TikTok', status: 'Pending Approval' }
             ],
             tasks: [
-                { id: 1, title: 'Setup Meta Pixel & CAPI', notes: 'Verify domain ownership in Business Manager first.', status: 'backlog', assignee: 'Tech Team', timestamp: 'Aug 27, 2026, 08:00 AM' },
-                { id: 2, title: 'Edit Q4 Campaign Reels', notes: 'Use dynamic captions and Sydney agency branding style.', status: 'progress', assignee: 'Video Editor', timestamp: 'Aug 27, 2026, 09:30 AM' },
-                { id: 3, title: 'Brand Asset Upload & Organization', notes: 'Synced securely from client Dropbox folder.', status: 'completed', assignee: 'Dropbox Sync', timestamp: 'Aug 26, 2026, 03:10 PM' }
+                { id: 1, title: 'Setup Meta Pixel & CAPI', notes: 'Verify domain ownership in Business Manager first.', status: 'backlog', assignee: 'Tech Team', timestamp: '27 Aug 2026, 08:00 AM' },
+                { id: 2, title: 'Edit Q4 Campaign Reels', notes: 'Use dynamic captions and Sydney agency branding style.', status: 'progress', assignee: 'Video Editor', timestamp: '27 Aug 2026, 09:30 AM' },
+                { id: 3, title: 'Brand Asset Upload & Organisation', notes: 'Synchronised securely from client Dropbox folder.', status: 'completed', assignee: 'Dropbox Sync', timestamp: '26 Aug 2026, 03:10 PM' }
+            ],
+            assets: [
+                { name: "Brand_Logo_2026.png", size: "2.4 MB", modified: "20 Aug 2026", type: "image/png" },
+                { name: "Product_Demo_Final.mp4", size: "45.1 MB", modified: "25 Aug 2026", type: "video/mp4" },
+                { name: "Guidelines.pdf", size: "1.1 MB", modified: "15 Aug 2026", type: "application/pdf" }
             ]
         };
 
@@ -401,7 +409,7 @@
 
         function saveInvoice() {
             let index = parseInt(document.getElementById('invEditIndex').value);
-            let nowTime = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            let nowTime = new Date().toLocaleString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             let newInv = {
                 id: document.getElementById('invIdInput').value || 'INV-2026-999',
                 desc: document.getElementById('invDescInput').value || 'Service Retainer',
@@ -475,7 +483,7 @@
             if (index >= 0) {
                 appData.contracts[index].title = document.getElementById('contractTitleInput').value;
                 appData.contracts[index].text = document.getElementById('contractTextInput').value;
-                appData.contracts[index].timestamp = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                appData.contracts[index].timestamp = new Date().toLocaleString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             }
             closeContractModal();
             renderContracts();
@@ -515,7 +523,7 @@
 
         function updateVideoStatus(index, status) {
             appData.videos[index].status = status;
-            appData.videos[index].timestamp = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            appData.videos[index].timestamp = new Date().toLocaleString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             renderVideos();
         }
 
@@ -535,16 +543,16 @@
         function submitRevisionRequest() {
             let notes = document.getElementById('revisionNotesInput').value;
             if (!notes) {
-                alert('Mangyaring ilagay ang iyong feedback para sa revision.');
+                alert('Please enter your feedback for the revision.');
                 return;
             }
             let videoItem = appData.videos.find(v => v.id === currentRevisionVideoId);
             if (videoItem) {
                 videoItem.status = 'Revision Requested';
                 videoItem.notes = notes;
-                videoItem.timestamp = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                videoItem.timestamp = new Date().toLocaleString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             }
-            alert('Ang kahilingan para sa revision ay naipadala na sa team!');
+            alert('Your revision request has been sent to the team successfully!');
             closeRevisionModal();
             renderVideos();
         }
@@ -586,7 +594,7 @@
         }
 
         function syncToGoogleCalendar() {
-            alert('Matagumpay na nai-sync ang mga content schedule sa Google Calendar!');
+            alert('Content schedules have been successfully synchronised to your Google Calendar!');
         }
 
         // --- TASKS FUNCTIONS ---
@@ -639,7 +647,7 @@
         function saveTask() {
             let title = document.getElementById('taskTitleInput').value;
             if (!title) return;
-            let nowTime = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            let nowTime = new Date().toLocaleString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             appData.tasks.push({
                 id: Date.now(),
                 title: title,
@@ -657,19 +665,13 @@
             renderTasks();
         }
 
-        // --- DROPBOX ASSETS INTEGRATION ---
+        // --- DROPBOX ASSETS INTEGRATION & DOWNLOAD/UPLOAD ---
         function loadDropboxAssets() {
             const container = document.getElementById('dropbox-assets-container');
             if (!container) return;
 
-            let files = [
-                { name: "Brand_Logo_2026.png", size: "2.4 MB", modified: "2026-08-20", path: "/Brand Assets/Brand_Logo_2026.png" },
-                { name: "Product_Demo_Final.mp4", size: "45.1 MB", modified: "2026-08-25", path: "/Videos/Product_Demo_Final.mp4" },
-                { name: "Guidelines.pdf", size: "1.1 MB", modified: "2026-08-15", path: "/Docs/Guidelines.pdf" }
-            ];
-
             let html = `<div class="space-y-2">`;
-            files.forEach(file => {
+            appData.assets.forEach((file, index) => {
                 html += `
                     <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 flex items-center justify-between text-xs">
                         <div class="flex items-center gap-3">
@@ -679,8 +681,8 @@
                                 <p class="text-[10px] text-slate-400">${file.size} • Modified: ${file.modified}</p>
                             </div>
                         </div>
-                        <button onclick="downloadDropboxFile('${file.name}')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded border border-slate-700 transition-colors">
-                            <i class="fa-solid fa-download mr-1"></i> Download
+                        <button onclick="downloadAsset(${index})" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded border border-slate-700 transition-colors flex items-center gap-1.5 font-medium">
+                            <i class="fa-solid fa-download"></i> Download
                         </button>
                     </div>
                 `;
@@ -689,18 +691,40 @@
             container.innerHTML = html;
         }
 
-        function downloadDropboxFile(fileName) {
-            alert(`Nagsisimula nang i-download ang file mula sa Dropbox: ${fileName}`);
+        function downloadAsset(index) {
+            let file = appData.assets[index];
+            // Gumawa ng dummy downloadable blob para ma-download talaga ng browser
+            const dummyContent = `Apex Media Agency - Certified Asset Record\nFile Name: ${file.name}\nSize: ${file.size}\nModified: ${file.modified}\nJurisdiction: Sydney, Australia`;
+            const blob = new Blob([dummyContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = file.name;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
         }
 
         function uploadNewAsset(event) {
-            let file = event.target.files[0];
-            if (!file) return;
-            alert(`Ina-upload ang "${file.name}" papunta sa Dropbox folder ng client...`);
-            setTimeout(() => {
-                alert('Matagumpay na na-upload ang file sa Dropbox!');
-                loadDropboxAssets();
-            }, 1000);
+            let uploadedFile = event.target.files[0];
+            if (!uploadedFile) return;
+
+            let fileSizeMB = (uploadedFile.size / (1024 * 1024)).toFixed(1) + ' MB';
+            let todayStr = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+            // Idagdag agad sa ating appData assets list para makita sa UI
+            appData.assets.unshift({
+                name: uploadedFile.name,
+                size: fileSizeMB,
+                modified: todayStr,
+                type: uploadedFile.type
+            });
+
+            loadDropboxAssets();
+            alert(`File "${uploadedFile.name}" has been successfully uploaded to your Dropbox brand folder and is now visible below.`);
+            // Reset input
+            event.target.value = '';
         }
 
         // --- GLOBAL PDF DOWNLOAD GENERATORS ---
