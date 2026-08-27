@@ -52,7 +52,11 @@
                     <span id="current-page-title" class="text-lg font-semibold text-white">Dashboard Overview</span>
                 </div>
                 <div class="flex items-center gap-4">
-                    <span class="text-xs bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 text-slate-300">
+                    <!-- LIVE CLOCK DISPLAY -->
+                    <div id="live-clock" class="text-xs font-mono bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800 text-blue-400 flex items-center gap-2">
+                        <i class="fa-regular fa-clock"></i> <span id="clock-text">Loading time...</span>
+                    </div>
+                    <span class="text-xs bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 text-slate-300 hidden sm:inline">
                         <i class="fa-brands fa-dropbox text-blue-400 mr-1.5"></i> Dropbox & MYOB Connected
                     </span>
                     <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700 font-semibold text-xs">
@@ -85,14 +89,14 @@
                     </div>
 
                     <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-3">
-                        <h3 class="text-base font-semibold text-white">Fully Interactive Client Portal</h3>
+                        <h3 class="text-base font-semibold text-white">Interactive Portal with Built-in Notes & Reminders</h3>
                         <p class="text-sm text-slate-400 leading-relaxed">
-                            Lahat ng data sa ibaba (Invoices, Contracts, Tasks, at iba pa) ay maaari mong i-edit, i-delete, o i-download bilang PDF anumang oras. Subukan mong pumunta sa Invoicing o Tasks para makita ang mga edit at delete buttons.
+                            Maaari na ngayong mag-iwan ng notes o remarks ang kliyente o team sa bawat invoice, video asset, at task para hindi makalimutan ang mga detalye.
                         </p>
                     </div>
                 </section>
 
-                <!-- 2. INVOICING & PAYMENTS (EDITABLE, DELETABLE, DOWNLOADABLE) -->
+                <!-- 2. INVOICING & PAYMENTS -->
                 <section id="tab-invoices" class="space-y-6 hidden">
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-bold text-white">Invoicing & Payments (MYOB Synced)</h2>
@@ -102,10 +106,10 @@
                         <table class="w-full text-left border-collapse text-sm">
                             <thead class="bg-slate-900 border-b border-slate-800 text-slate-400">
                                 <tr>
-                                    <th class="p-4 font-medium">Invoice ID</th>
+                                    <th class="p-4 font-medium">Invoice ID & Notes</th>
                                     <th class="p-4 font-medium">Description</th>
                                     <th class="p-4 font-medium">Amount (AUD)</th>
-                                    <th class="p-4 font-medium">Due Date</th>
+                                    <th class="p-4 font-medium">Timestamp</th>
                                     <th class="p-4 font-medium">Status</th>
                                     <th class="p-4 font-medium text-right">Actions</th>
                                 </tr>
@@ -144,7 +148,7 @@
                     <div id="calendar-container" class="space-y-3"></div>
                 </section>
 
-                <!-- 6. TASKS & PROJECTS (EDITABLE & DELETABLE) -->
+                <!-- 6. TASKS & PROJECTS -->
                 <section id="tab-tasks" class="space-y-6 hidden">
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-bold text-white">Task & Project Management</h2>
@@ -184,7 +188,7 @@
                 <section id="tab-assets" class="space-y-6 hidden">
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-bold text-white">File & Brand Asset Storage (Dropbox Connected)</h2>
-                        <button onclick="alert('Dropbox file upload simulator: File uploaded successfully!')" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs transition"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload Asset</button>
+                        <button onclick="alert('Dropbox file upload simulator: File uploaded successfully at ' + new Date().toLocaleTimeString())" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs transition"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload Asset</button>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
@@ -232,8 +236,8 @@
                 <input type="text" id="invAmountInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="$4,850.00">
             </div>
             <div>
-                <label class="text-xs text-slate-400 font-medium">Due Date</label>
-                <input type="text" id="invDueInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="15/10/2026">
+                <label class="text-xs text-slate-400 font-medium">Client Notes / Remarks</label>
+                <textarea id="invNotesInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-20" placeholder="Iwanan ang notes o instructions dito..."></textarea>
             </div>
             <div>
                 <label class="text-xs text-slate-400 font-medium">Status</label>
@@ -258,6 +262,10 @@
                 <input type="text" id="taskTitleInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="Setup Meta CAPI">
             </div>
             <div>
+                <label class="text-xs text-slate-400 font-medium">Notes / Instructions</label>
+                <textarea id="taskNotesInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-20" placeholder="Maglagay ng example o notes para hindi makalimutan..."></textarea>
+            </div>
+            <div>
                 <label class="text-xs text-slate-400 font-medium">Status / Column</label>
                 <select id="taskStatusInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1">
                     <option value="backlog">Backlog / To-Do</option>
@@ -278,28 +286,38 @@
 
     <!-- JAVASCRIPT APP LOGIC -->
     <script>
-        // Main Application State Data
+        // Live Clock Function
+        function updateLiveClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const dateString = now.toLocaleDateString('en-AU', { month: 'short', day: 'numeric', year: 'numeric' });
+            document.getElementById('clock-text').innerText = `${dateString} • ${timeString} AEST`;
+        }
+        setInterval(updateLiveClock, 1000);
+        updateLiveClock();
+
+        // Main Application State Data with Notes
         let appData = {
             invoices: [
-                { id: 'INV-2026-088', desc: 'August Social Media Retainer & Ads', amount: '$4,850.00', due: '15/09/2026', status: 'Pending Payment' },
-                { id: 'INV-2026-071', desc: 'July Social Media Retainer', amount: '$4,850.00', due: '15/08/2026', status: 'Paid' }
+                { id: 'INV-2026-088', desc: 'August Social Media Retainer & Ads', amount: '$4,850.00', notes: 'Include MYOB direct bank transfer receipt upon payment.', timestamp: 'Aug 27, 2026, 09:15 AM', status: 'Pending Payment' },
+                { id: 'INV-2026-071', desc: 'July Social Media Retainer', amount: '$4,850.00', notes: 'Settled via corporate wire transfer.', timestamp: 'Jul 27, 2026, 10:00 AM', status: 'Paid' }
             ],
             contracts: [
-                { title: 'Master Service Agreement (MSA) - FY2026-2027', date: 'October 15, 2025', text: '1. PARTIES: Apex Media Agency (Sydney, Australia) and Client Partner.\n2. SCOPE: Short-form video creation, campaign scheduling, lead generation.\n3. TERMS: Net-30 via MYOB settlement.' },
-                { title: 'Q3-Q4 Influencer & Content Licensing Addendum', date: 'January 10, 2026', text: '1. LICENSING: Creator grants non-exclusive distribution rights across Meta & TikTok.\n2. COMPENSATION: Locked per retainer agreement.' }
+                { title: 'Master Service Agreement (MSA) - FY2026-2027', date: 'October 15, 2025', timestamp: 'Oct 15, 2025, 02:30 PM', text: '1. PARTIES: Apex Media Agency (Sydney, Australia) and Client Partner.\n2. SCOPE: Short-form video creation, campaign scheduling, lead generation.\n3. TERMS: Net-30 via MYOB settlement.' },
+                { title: 'Q3-Q4 Influencer & Content Licensing Addendum', date: 'January 10, 2026', timestamp: 'Jan 10, 2026, 11:00 AM', text: '1. LICENSING: Creator grants non-exclusive distribution rights across Meta & TikTok.\n2. COMPENSATION: Locked per retainer agreement.' }
             ],
             videos: [
-                { title: 'Reel #12 - Bondi Beach Lifestyle Promo (v2)', status: 'Revision Requested', file: 'Reel_12_Bondi.mp4' },
-                { title: 'Client UGC Testimonial - Sydney CBD Shoot', status: 'Approved ✓', file: 'UGC_Sydney.mp4' }
+                { title: 'Reel #12 - Bondi Beach Lifestyle Promo (v2)', notes: 'Please check hook timing and brighten the lighting at 0:03.', status: 'Revision Requested', timestamp: 'Aug 26, 2026, 04:45 PM', file: 'Reel_12_Bondi.mp4' },
+                { title: 'Client UGC Testimonial - Sydney CBD Shoot', notes: 'Approved for paid ad scaling.', status: 'Approved ✓', timestamp: 'Aug 25, 2026, 01:20 PM', file: 'UGC_Sydney.mp4' }
             ],
             calendar: [
                 { date: 'Aug 30, 2026', title: 'Behind-the-Scenes Reel: Sydney Office Launch', platform: 'Instagram', status: 'Scheduled' },
                 { date: 'Sep 02, 2026', title: 'Top 3 Social Media Mistakes', platform: 'TikTok', status: 'Pending Approval' }
             ],
             tasks: [
-                { id: 1, title: 'Setup Meta Pixel & CAPI', status: 'backlog', assignee: 'Tech Team' },
-                { id: 2, title: 'Edit Q4 Campaign Reels', status: 'progress', assignee: 'Video Editor' },
-                { id: 3, title: 'Brand Asset Upload & Organization', status: 'completed', assignee: 'Dropbox Sync' }
+                { id: 1, title: 'Setup Meta Pixel & CAPI', notes: 'Verify domain ownership in Business Manager first.', status: 'backlog', assignee: 'Tech Team', timestamp: 'Aug 27, 2026, 08:00 AM' },
+                { id: 2, title: 'Edit Q4 Campaign Reels', notes: 'Use dynamic captions and Sydney agency branding style.', status: 'progress', assignee: 'Video Editor', timestamp: 'Aug 27, 2026, 09:30 AM' },
+                { id: 3, title: 'Brand Asset Upload & Organization', notes: 'Synced securely from client Dropbox folder.', status: 'completed', assignee: 'Dropbox Sync', timestamp: 'Aug 26, 2026, 03:10 PM' }
             ]
         };
 
@@ -326,24 +344,27 @@
             renderTasks();
         }
 
-        // --- INVOICE FUNCTIONS (Add, Edit, Delete, Download PDF) ---
+        // --- INVOICE FUNCTIONS ---
         function renderInvoices() {
             const tbody = document.getElementById('invoice-table-body');
             tbody.innerHTML = '';
             appData.invoices.forEach((inv, index) => {
                 let statusBadge = inv.status === 'Paid' 
-                    ? '<span class="bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full text-xs border border-emerald-500/20">Paid</span>'
-                    : '<span class="bg-amber-500/10 text-amber-400 px-2.5 py-1 rounded-full text-xs border border-amber-500/20">Pending Payment</span>';
+                    ? '<span class="bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full text-xs border border-emerald-500/25">Paid</span>'
+                    : '<span class="bg-amber-500/10 text-amber-400 px-2.5 py-1 rounded-full text-xs border border-amber-500/25">Pending Payment</span>';
                 
                 tbody.innerHTML += `
-                    <tr>
-                        <td class="p-4 font-mono text-blue-400">${inv.id}</td>
+                    <tr class="align-top">
+                        <td class="p-4">
+                            <span class="font-mono text-blue-400 font-semibold">${inv.id}</span>
+                            <p class="text-xs text-slate-400 mt-1 italic">📝 ${inv.notes || 'No notes added.'}</p>
+                        </td>
                         <td class="p-4">${inv.desc}</td>
                         <td class="p-4 font-semibold">${inv.amount}</td>
-                        <td class="p-4 text-slate-300">${inv.due}</td>
+                        <td class="p-4 text-xs font-mono text-slate-400">${inv.timestamp}</td>
                         <td class="p-4">${statusBadge}</td>
                         <td class="p-4 text-right space-x-2">
-                            <button onclick="downloadPDF('INVOICE RECORD\\nID: ${inv.id}\\nDescription: ${inv.desc}\\nAmount: ${inv.amount} AUD\\nDue Date: ${inv.due}\\nStatus: ${inv.status}')" class="text-blue-400 hover:text-blue-300 text-xs" title="Download PDF"><i class="fa-solid fa-download"></i></button>
+                            <button onclick="downloadPDF('INVOICE RECORD\\nID: ${inv.id}\\nDescription: ${inv.desc}\\nAmount: ${inv.amount} AUD\\nNotes: ${inv.notes}\\nTimestamp: ${inv.timestamp}\\nStatus: ${inv.status}')" class="text-blue-400 hover:text-blue-300 text-xs" title="Download PDF"><i class="fa-solid fa-download"></i></button>
                             <button onclick="editInvoice(${index})" class="text-slate-400 hover:text-white text-xs" title="Edit"><i class="fa-solid fa-pen"></i></button>
                             <button onclick="deleteInvoice(${index})" class="text-rose-400 hover:text-rose-300 text-xs" title="Delete"><i class="fa-solid fa-trash"></i></button>
                         </td>
@@ -360,14 +381,14 @@
                 document.getElementById('invIdInput').value = inv.id;
                 document.getElementById('invDescInput').value = inv.desc;
                 document.getElementById('invAmountInput').value = inv.amount;
-                document.getElementById('invDueInput').value = inv.due;
+                document.getElementById('invNotesInput').value = inv.notes || '';
                 document.getElementById('invStatusInput').value = inv.status;
             } else {
                 document.getElementById('invoiceModalTitle').innerText = "Add New Invoice";
                 document.getElementById('invIdInput').value = '';
                 document.getElementById('invDescInput').value = '';
                 document.getElementById('invAmountInput').value = '';
-                document.getElementById('invDueInput').value = '';
+                document.getElementById('invNotesInput').value = '';
                 document.getElementById('invStatusInput').value = 'Pending Payment';
             }
             document.getElementById('invoiceModal').classList.remove('hidden');
@@ -379,15 +400,18 @@
 
         function saveInvoice() {
             let index = parseInt(document.getElementById('invEditIndex').value);
+            let nowTime = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             let newInv = {
                 id: document.getElementById('invIdInput').value || 'INV-2026-999',
                 desc: document.getElementById('invDescInput').value || 'Service Retainer',
                 amount: document.getElementById('invAmountInput').value || '$1,000.00',
-                due: document.getElementById('invDueInput').value || '01/10/2026',
+                notes: document.getElementById('invNotesInput').value || '',
+                timestamp: nowTime,
                 status: document.getElementById('invStatusInput').value
             };
 
             if (index >= 0) {
+                newInv.timestamp = appData.invoices[index].timestamp;
                 appData.invoices[index] = newInv;
             } else {
                 appData.invoices.push(newInv);
@@ -411,19 +435,19 @@
         function renderContracts() {
             const container = document.getElementById('contracts-container');
             container.innerHTML = '';
-            appData.contracts.forEach((c, idx) => {
+            appData.contracts.forEach((c) => {
                 container.innerHTML += `
                     <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
                         <div class="flex justify-between items-start border-b border-slate-800 pb-4">
                             <div>
                                 <h3 class="font-semibold text-white">${c.title}</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Effective Date: ${c.date} • Sydney, NSW Jurisdiction</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Signed Timestamp: <span class="font-mono text-blue-400">${c.timestamp}</span> • Sydney, NSW Jurisdiction</p>
                             </div>
-                            <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded text-xs border border-emerald-500/20"><i class="fa-solid fa-check mr-1"></i> Executed</span>
+                            <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded text-xs border border-emerald-500/25"><i class="fa-solid fa-check mr-1"></i> Executed</span>
                         </div>
                         <div class="bg-slate-900 p-4 rounded-lg text-xs text-slate-300 font-mono leading-relaxed border border-slate-800 whitespace-pre-line">${c.text}</div>
                         <div class="flex justify-end pt-2">
-                            <button onclick="downloadPDF('${c.title}\\nEffective Date: ${c.date}\\n\\n${c.text}')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-download mr-1.5"></i> Download PDF Copy</button>
+                            <button onclick="downloadPDF('${c.title}\\nTimestamp: ${c.timestamp}\\n\\n${c.text}')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-download mr-1.5"></i> Download PDF Copy</button>
                         </div>
                     </div>
                 `;
@@ -435,18 +459,25 @@
             const container = document.getElementById('videos-container');
             container.innerHTML = '';
             appData.videos.forEach((v, idx) => {
-                let badgeColor = v.status.includes('Approved') ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' : 'text-amber-400 bg-amber-500/10 border-amber-500/20';
+                let badgeColor = v.status.includes('Approved') ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/25' : 'text-amber-400 bg-amber-500/10 border-amber-500/25';
                 container.innerHTML += `
-                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
-                        <div class="bg-slate-900 rounded-lg h-44 flex items-center justify-center border border-slate-800 relative">
-                            <i class="fa-solid fa-play text-3xl text-blue-500"></i>
-                            <span class="absolute top-3 left-3 text-xs bg-black/60 px-2 py-1 rounded text-slate-300">${v.file}</span>
-                            <span class="absolute top-3 right-3 text-xs px-2 py-1 rounded border ${badgeColor}">${v.status}</span>
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4 flex flex-col justify-between">
+                        <div>
+                            <div class="bg-slate-900 rounded-lg h-36 flex items-center justify-center border border-slate-800 relative mb-3">
+                                <i class="fa-solid fa-play text-3xl text-blue-500"></i>
+                                <span class="absolute top-3 left-3 text-xs bg-black/60 px-2 py-1 rounded text-slate-300 font-mono">${v.file}</span>
+                                <span class="absolute top-3 right-3 text-xs px-2 py-1 rounded border ${badgeColor}">${v.status}</span>
+                            </div>
+                            <h3 class="font-semibold text-white text-sm">${v.title}</h3>
+                            <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800 text-xs text-slate-300 mt-2">
+                                <span class="text-blue-400 font-semibold">Notes / Feedback:</span> 
+                                <p class="mt-0.5 italic text-slate-400" id="video-note-${idx}">${v.notes || 'No notes yet. Click edit to add.'}</p>
+                            </div>
+                            <p class="text-[11px] font-mono text-slate-500 mt-2"><i class="fa-regular fa-clock mr-1"></i> Logged: ${v.timestamp}</p>
                         </div>
-                        <h3 class="font-semibold text-white text-sm">${v.title}</h3>
-                        <div class="flex gap-2 pt-2">
+                        <div class="flex gap-2 pt-2 border-t border-slate-800">
                             <button onclick="updateVideoStatus(${idx}, 'Approved ✓')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded text-xs font-semibold transition">Approve</button>
-                            <button onclick="updateVideoStatus(${idx}, 'Revision Requested')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 rounded text-xs font-semibold transition">Request Changes</button>
+                            <button onclick="editVideoNote(${idx})" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded text-xs font-semibold transition" title="Edit Notes"><i class="fa-solid fa-pen-to-square"></i></button>
                         </div>
                     </div>
                 `;
@@ -455,7 +486,17 @@
 
         function updateVideoStatus(index, status) {
             appData.videos[index].status = status;
+            appData.videos[index].timestamp = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             renderVideos();
+        }
+
+        function editVideoNote(index) {
+            let currentNotes = appData.videos[index].notes || '';
+            let newNote = prompt("Iwanan ang notes o instructions para sa video na ito:", currentNotes);
+            if (newNote !== null) {
+                appData.videos[index].notes = newNote;
+                renderVideos();
+            }
         }
 
         // --- CALENDAR FUNCTIONS ---
@@ -478,7 +519,7 @@
             });
         }
 
-        // --- TASKS FUNCTIONS (Add, Delete) ---
+        // --- TASKS FUNCTIONS ---
         function renderTasks() {
             const container = document.getElementById('tasks-container');
             container.innerHTML = `
@@ -502,10 +543,12 @@
                 let col = document.getElementById('col-' + t.status);
                 if (col) {
                     col.innerHTML += `
-                        <div class="bg-slate-900 p-3 rounded border border-slate-800 text-xs space-y-1 relative group">
+                        <div class="bg-slate-900 p-3 rounded border border-slate-800 text-xs space-y-1.5 relative group">
                             <button onclick="deleteTask(${idx})" class="absolute top-2 right-2 text-rose-400 hover:text-rose-300"><i class="fa-solid fa-xmark"></i></button>
                             <p class="font-semibold text-white pr-4">${t.title}</p>
+                            <p class="text-slate-400 italic">📝 ${t.notes || 'No notes'}</p>
                             <p class="text-slate-400">Assigned: ${t.assignee}</p>
+                            <p class="text-[10px] font-mono text-blue-400"><i class="fa-regular fa-clock"></i> ${t.timestamp}</p>
                         </div>
                     `;
                 }
@@ -515,6 +558,7 @@
 
         function openTaskModal() {
             document.getElementById('taskTitleInput').value = '';
+            document.getElementById('taskNotesInput').value = '';
             document.getElementById('taskModal').classList.remove('hidden');
         }
 
@@ -525,11 +569,14 @@
         function saveTask() {
             let title = document.getElementById('taskTitleInput').value;
             if (!title) return;
+            let nowTime = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             appData.tasks.push({
                 id: Date.now(),
                 title: title,
+                notes: document.getElementById('taskNotesInput').value || '',
                 status: document.getElementById('taskStatusInput').value,
-                assignee: document.getElementById('taskAssigneeInput').value || 'Agency Team'
+                assignee: document.getElementById('taskAssigneeInput').value || 'Agency Team',
+                timestamp: nowTime
             });
             closeTaskModal();
             renderTasks();
@@ -551,7 +598,7 @@
             
             doc.setFont("Helvetica", "normal");
             doc.setFontSize(10);
-            doc.text("Official Portal Certified Copy", 20, 27);
+            doc.text("Official Portal Certified Copy with Notes & Timestamps", 20, 27);
             
             doc.setLineWidth(0.4);
             doc.line(20, 31, 190, 31);
@@ -566,7 +613,7 @@
             doc.setFontSize(8);
             doc.text("Generated securely via Apex Client Portal & MYOB/Dropbox Sync.", 20, 280);
 
-            doc.save("Apex_Agency_Document.pdf");
+            doc.save("Apex_Agency_Record.pdf");
         }
 
         // Initial Load
