@@ -6,6 +6,8 @@
     <title>Client Portal | Sydney Agency Workspace</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF Library para sa tunay na PDF Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-800">
 
@@ -145,9 +147,9 @@
                 <!-- Contract text content goes here -->
             </div>
             <div class="border-t border-slate-100 pt-4 mt-4 flex justify-end space-x-3">
-                <a id="downloadBtn" href="#" target="_blank" class="px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-md hover:bg-emerald-700 transition shadow-xs">
+                <button type="button" onclick="downloadCurrentContract()" class="px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-md hover:bg-emerald-700 transition shadow-xs cursor-pointer">
                     Download PDF Copy
-                </a>
+                </button>
                 <button type="button" onclick="closeContractModal()" class="px-4 py-2 bg-slate-200 text-slate-700 text-xs font-semibold rounded-md hover:bg-slate-300 transition cursor-pointer">
                     Close
                 </button>
@@ -155,7 +157,7 @@
         </div>
     </div>
 
-    <!-- JavaScript para sa lahat ng functions -->
+    <!-- JavaScript para sa lahat ng functions at PDF Generator -->
     <script>
         const contractTexts = {
             'addendum': `
@@ -174,22 +176,42 @@
             `
         };
 
+        let currentContractData = { title: '', text: '' };
+
         function openContractModal(title, date, type) {
-            document.getElementById('modalTitle').innerText = title + ' (' + date + ')';
-            document.getElementById('modalBody').innerHTML = contractTexts[type] || '<p>No contract details available.</p>';
+            const fullTitle = title + ' (' + date + ')';
+            currentContractData.title = fullTitle;
             
-            const downloadLink = document.getElementById('downloadBtn');
-            if (type === 'msa') {
-                downloadLink.href = '/docs/msa.pdf';
-            } else {
-                downloadLink.href = '/docs/addendum.pdf';
-            }
+            const textContent = contractTexts[type] || 'No contract details available.';
+            currentContractData.text = textContent.replace(/<[^>]*>?/gm, ''); // Tanggalin ang HTML tags para malinis sa PDF
+
+            document.getElementById('modalTitle').innerText = fullTitle;
+            document.getElementById('modalBody').innerHTML = textContent;
 
             document.getElementById('contractModal').classList.remove('hidden');
         }
 
         function closeContractModal() {
             document.getElementById('contractModal').classList.add('hidden');
+        }
+
+        // Function para mag-download ng tunay na PDF gamit ang jsPDF
+        function downloadCurrentContract() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFont("Helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text(currentContractData.title, 15, 20);
+
+            doc.setFont("Helvetica", "normal");
+            doc.setFontSize(10);
+            
+            const splitText = doc.splitTextToSize(currentContractData.text, 180);
+            doc.text(splitText, 15, 30);
+
+            const fileName = currentContractData.title.toLowerCase().replace(/[^a-z0-9]/g, '_') + '.pdf';
+            doc.save(fileName);
         }
 
         async function loadDashboardData() {
