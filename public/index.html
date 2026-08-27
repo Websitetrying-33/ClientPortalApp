@@ -3,85 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Portal - Sydney Agency</title>
+    <title>Client Portal | Sydney Agency Workspace</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans antialiased text-gray-900">
+<body class="bg-slate-50 font-sans antialiased text-slate-800">
 
-    <!-- Navbar -->
-    <nav class="bg-white shadow-sm border-b border-gray-200">
+    <!-- Navbar: Clean Corporate Slate/Navy Theme -->
+    <nav class="bg-slate-900 text-white shadow-md border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="bg-blue-600 text-white font-bold p-2 rounded-lg">CP</div>
-                <span class="text-xl font-bold text-gray-800">Client Portal & Dashboard</span>
+                <div class="bg-sky-600 text-white font-bold px-3 py-1.5 rounded-md text-sm tracking-wide">AU</div>
+                <span class="text-lg font-semibold tracking-tight text-slate-100">Client Portal & Dashboard</span>
             </div>
             <div>
-                <span class="text-sm bg-green-100 text-green-800 font-medium px-3 py-1 rounded-full">Live Client Workspace</span>
+                <span class="text-xs bg-slate-800 text-sky-400 border border-slate-700 font-medium px-3 py-1 rounded-full">Sydney Agency Retainer</span>
             </div>
         </div>
     </nav>
 
     <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
         <!-- Header / Welcome Section -->
-        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Welcome back, Partner!</h1>
-                <p class="text-sm text-gray-500">Here is the real-time status of your campaigns, contracts, assets, and invoices.</p>
+                <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Welcome back, Partner</h1>
+                <p class="text-sm text-slate-500 mt-1">Here is the real-time overview of your active campaigns, contracts, assets, and milestones.</p>
             </div>
-            <div class="text-sm text-gray-600 bg-gray-50 px-4 py-2 rounded-lg border">
-                <strong>Active Retainer:</strong> Sydney Agency Q3-Q4 Campaign
+            <div class="text-xs text-slate-600 bg-slate-50 px-4 py-2.5 rounded-lg border border-slate-200">
+                <span class="font-medium text-slate-900">Active Retainer:</span> Q3–Q4 Campaign Scale
             </div>
         </div>
 
-        <!-- Grid Layout para sa mga Sections -->
+        <!-- Grid Layout -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <!-- 1. Invoice & Billing Section -->
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 flex flex-col justify-between">
+            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 flex flex-col justify-between">
                 <div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                        <span class="mr-2">💳</span> Billing & Invoice
+                    <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
+                        <span class="mr-2 text-sky-600">💳</span> Billing & Invoice
                     </h3>
-                    <div id="invoiceSection" class="space-y-2 text-sm text-gray-600">
-                        <p><strong>Ref:</strong> <span id="invRef">Loading...</span></p>
-                        <p><strong>Period:</strong> <span id="invPeriod">Loading...</span></p>
-                        <p><strong>Scope:</strong> <span id="invScope">Loading...</span></p>
-                        <p class="text-base font-bold text-gray-900 mt-2">Amount: <span id="invAmount">Loading...</span></p>
+                    <div id="invoiceSection" class="space-y-2 text-sm text-slate-600">
+                        <p><strong>Ref:</strong> <span id="invRef" class="text-slate-900 font-medium">Loading...</span></p>
+                        <p><strong>Period:</strong> <span id="invPeriod" class="text-slate-900 font-medium">Loading...</span></p>
+                        <p><strong>Scope:</strong> <span id="invScope" class="text-slate-900 font-medium">Loading...</span></p>
+                        <p class="text-base font-bold text-slate-900 mt-3 pt-2 border-t border-slate-100">Amount: <span id="invAmount" class="text-sky-600">Loading...</span></p>
                     </div>
                 </div>
-                <div class="mt-6 pt-4 border-t border-gray-100">
-                    <span id="invStatus" class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">Pending Payment</span>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center">
+                    <span class="text-xs text-slate-500">Status:</span>
+                    <span id="invStatus" class="px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-medium rounded-md border border-amber-200">Pending Payment</span>
                 </div>
             </div>
 
             <!-- 2. Agreements & Contracts Section -->
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 lg:col-span-2 flex flex-col justify-between">
+            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 lg:col-span-2 flex flex-col justify-between">
                 <div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                        <span class="mr-2">✍️</span> Agreements & Contracts
+                    <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
+                        <span class="mr-2 text-sky-600">✍️</span> Agreements & Contracts
                     </h3>
                     <div class="space-y-3">
                         <!-- Contract 1 -->
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
+                        <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-lg border border-slate-200 hover:bg-slate-100/60 transition">
                             <div>
-                                <h4 class="font-semibold text-gray-800 text-sm">Q3-Q4 Influencer & Content Licensing Addendum</h4>
-                                <p class="text-xs text-green-600">✔ Signed & Verified (2026-01-10)</p>
+                                <h4 class="font-semibold text-slate-900 text-sm">Q3-Q4 Influencer & Content Licensing Addendum</h4>
+                                <p class="text-xs text-emerald-600 font-medium mt-0.5">✔ Signed & Verified (2026-01-10)</p>
                             </div>
-                            <button type="button" onclick="openContractModal('Q3-Q4 Influencer & Content Licensing Addendum', '2026-01-10', 'addendum')" class="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition cursor-pointer">
+                            <button type="button" onclick="openContractModal('Q3-Q4 Influencer & Content Licensing Addendum', '2026-01-10', 'addendum')" class="px-3.5 py-1.5 bg-sky-600 text-white text-xs font-medium rounded-md hover:bg-sky-700 transition cursor-pointer shadow-xs">
                                 View Contract
                             </button>
                         </div>
 
                         <!-- Contract 2 -->
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
+                        <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-lg border border-slate-200 hover:bg-slate-100/60 transition">
                             <div>
-                                <h4 class="font-semibold text-gray-800 text-sm">Master Service Agreement & NDA (Sydney Agency)</h4>
-                                <p class="text-xs text-green-600">✔ Signed & Verified (2025-10-15)</p>
+                                <h4 class="font-semibold text-slate-900 text-sm">Master Service Agreement & NDA (Sydney Agency)</h4>
+                                <p class="text-xs text-emerald-600 font-medium mt-0.5">✔ Signed & Verified (2025-10-15)</p>
                             </div>
-                            <button type="button" onclick="openContractModal('Master Service Agreement & NDA (Sydney Agency)', '2025-10-15', 'msa')" class="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition cursor-pointer">
+                            <button type="button" onclick="openContractModal('Master Service Agreement & NDA (Sydney Agency)', '2025-10-15', 'msa')" class="px-3.5 py-1.5 bg-sky-600 text-white text-xs font-medium rounded-md hover:bg-sky-700 transition cursor-pointer shadow-xs">
                                 View Contract
                             </button>
                         </div>
@@ -90,20 +91,20 @@
             </div>
 
             <!-- 3. Video Assets & Review Section -->
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 lg:col-span-3">
-                <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                    <span class="mr-2">🎬</span> Video Assets & Approvals
+            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 lg:col-span-3">
+                <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
+                    <span class="mr-2 text-sky-600">🎬</span> Video Assets & Approvals
                 </h3>
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+                    <table class="min-w-full divide-y divide-slate-200 text-sm">
+                        <thead class="bg-slate-50 text-slate-500 uppercase text-xs font-semibold">
                             <tr>
                                 <th class="px-4 py-3 text-left">Asset Title</th>
                                 <th class="px-4 py-3 text-left">Status</th>
                                 <th class="px-4 py-3 text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="videosTableBody" class="divide-y divide-gray-200 bg-white">
+                        <tbody id="videosTableBody" class="divide-y divide-slate-100 bg-white">
                             <!-- Dynamically loaded via script -->
                         </tbody>
                     </table>
@@ -111,9 +112,9 @@
             </div>
 
             <!-- 4. Content Schedule Section -->
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                    <span class="mr-2">📅</span> Content Schedule
+            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200">
+                <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
+                    <span class="mr-2 text-sky-600">📅</span> Content Schedule
                 </h3>
                 <div id="scheduleList" class="space-y-3">
                     <!-- Dynamically loaded -->
@@ -121,9 +122,9 @@
             </div>
 
             <!-- 5. Leads & Pipeline Metrics -->
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 lg:col-span-2">
-                <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                    <span class="mr-2">📈</span> Leads & ROI Metrics
+            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 lg:col-span-2">
+                <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
+                    <span class="mr-2 text-sky-600">📈</span> Leads & ROI Metrics
                 </h3>
                 <div id="leadsSection" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- Dynamically loaded -->
@@ -134,20 +135,20 @@
     </main>
 
     <!-- CONTRACT MODAL POPUP -->
-    <div id="contractModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center border-b pb-3 mb-4">
-                <h3 id="modalTitle" class="text-lg font-bold text-gray-900">Contract Title</h3>
-                <button type="button" onclick="closeContractModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold cursor-pointer">&times;</button>
+    <div id="contractModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full p-6 shadow-xl border border-slate-200 relative max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                <h3 id="modalTitle" class="text-base font-bold text-slate-900">Contract Title</h3>
+                <button type="button" onclick="closeContractModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold cursor-pointer">&times;</button>
             </div>
-            <div id="modalBody" class="overflow-y-auto flex-grow text-sm text-gray-700 space-y-4 pr-2 bg-gray-50 p-4 rounded-lg border max-h-[50vh]">
+            <div id="modalBody" class="overflow-y-auto flex-grow text-sm text-slate-600 space-y-3 pr-2 bg-slate-50 p-4 rounded-lg border border-slate-200 max-h-[50vh] leading-relaxed">
                 <!-- Contract text content goes here -->
             </div>
-            <div class="border-t pt-4 mt-4 flex justify-end space-x-3">
-                <a id="downloadBtn" href="#" target="_blank" class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition">
+            <div class="border-t border-slate-100 pt-4 mt-4 flex justify-end space-x-3">
+                <a id="downloadBtn" href="#" target="_blank" class="px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-md hover:bg-emerald-700 transition shadow-xs">
                     Download PDF Copy
                 </a>
-                <button type="button" onclick="closeContractModal()" class="px-4 py-2 bg-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-400 transition cursor-pointer">
+                <button type="button" onclick="closeContractModal()" class="px-4 py-2 bg-slate-200 text-slate-700 text-xs font-semibold rounded-md hover:bg-slate-300 transition cursor-pointer">
                     Close
                 </button>
             </div>
@@ -208,14 +209,14 @@
                 videosTable.innerHTML = '';
                 if (data.videos && data.videos.length > 0) {
                     data.videos.forEach(v => {
-                        let statusColor = v.status.includes('Approved') ? 'text-green-600 bg-green-50' : 'text-amber-600 bg-amber-50';
+                        let statusColor = v.status.includes('Approved') ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-amber-700 bg-amber-50 border-amber-200';
                         videosTable.innerHTML += `
                             <tr>
-                                <td class="px-4 py-3 font-medium text-gray-900">${v.title}</td>
-                                <td class="px-4 py-3"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${statusColor}">${v.status}</span></td>
+                                <td class="px-4 py-3 font-medium text-slate-900">${v.title}</td>
+                                <td class="px-4 py-3"><span class="px-2.5 py-1 rounded-md text-xs font-medium border ${statusColor}">${v.status}</span></td>
                                 <td class="px-4 py-3 text-right">
-                                    <button type="button" onclick="updateVideoStatus(${v.id}, 'Approved ✓')" class="px-3 py-1 bg-emerald-600 text-white text-xs rounded hover:bg-emerald-700 mr-2 cursor-pointer">Approve</button>
-                                    <button type="button" onclick="updateVideoStatus(${v.id}, 'Revision Requested')" class="px-3 py-1 bg-gray-200 text-gray-700 text-xs rounded hover:bg-gray-300 cursor-pointer">Revise</button>
+                                    <button type="button" onclick="updateVideoStatus(${v.id}, 'Approved ✓')" class="px-3 py-1 bg-emerald-600 text-white text-xs font-medium rounded hover:bg-emerald-700 mr-1.5 cursor-pointer shadow-xs">Approve</button>
+                                    <button type="button" onclick="updateVideoStatus(${v.id}, 'Revision Requested')" class="px-3 py-1 bg-slate-100 text-slate-700 border border-slate-300 text-xs font-medium rounded hover:bg-slate-200 cursor-pointer">Revise</button>
                                 </td>
                             </tr>
                         `;
@@ -227,10 +228,10 @@
                 if (data.schedule && data.schedule.length > 0) {
                     data.schedule.forEach(s => {
                         schedList.innerHTML += `
-                            <div class="p-3 bg-gray-50 rounded-lg border text-sm">
-                                <span class="text-xs font-bold text-blue-600 uppercase">${s.platform}</span>
-                                <p class="font-medium text-gray-800">${s.postTitle}</p>
-                                <p class="text-xs text-gray-500 mt-1">${s.scheduleDate}</p>
+                            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-sm">
+                                <span class="text-[11px] font-bold text-sky-600 uppercase tracking-wider">${s.platform}</span>
+                                <p class="font-semibold text-slate-900 mt-0.5">${s.postTitle}</p>
+                                <p class="text-xs text-slate-500 mt-1">${s.scheduleDate}</p>
                             </div>
                         `;
                     });
@@ -238,17 +239,17 @@
 
                 if (data.leads) {
                     document.getElementById('leadsSection').innerHTML = `
-                        <div class="bg-gray-50 p-3 rounded-lg border">
-                            <p class="text-xs text-gray-500">Qualified Leads Generated</p>
-                            <p class="text-lg font-bold text-gray-900">${data.leads.qualifiedLeads || '0'}</p>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <p class="text-xs font-medium text-slate-500">Qualified Leads Generated</p>
+                            <p class="text-xl font-bold text-slate-900 mt-1">${data.leads.qualifiedLeads || '0'}</p>
                         </div>
-                        <div class="bg-gray-50 p-3 rounded-lg border">
-                            <p class="text-xs text-gray-500">Booked Calls</p>
-                            <p class="text-lg font-bold text-gray-900">${data.leads.bookedCalls || '0'}</p>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <p class="text-xs font-medium text-slate-500">Booked Calls</p>
+                            <p class="text-xl font-bold text-slate-900 mt-1">${data.leads.bookedCalls || '0'}</p>
                         </div>
-                        <div class="bg-gray-50 p-3 rounded-lg border">
-                            <p class="text-xs text-gray-500">Estimated Campaign ROI</p>
-                            <p class="text-lg font-bold text-emerald-600">${data.leads.roi || '0x'}</p>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <p class="text-xs font-medium text-slate-500">Estimated Campaign ROI</p>
+                            <p class="text-xl font-bold text-emerald-600 mt-1">${data.leads.roi || '0x'}</p>
                         </div>
                     `;
                 }
