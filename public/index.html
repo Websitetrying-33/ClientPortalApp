@@ -3,274 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Media Agency | Interactive Client Portal (Sydney)</title>
+    <title>Apex Media Agency - Interactive Client Portal</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jsPDF Library for PDF Exports -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white">
 
+    <!-- APP WRAPPER -->
     <div class="flex h-screen overflow-hidden">
-        
+
         <!-- SIDEBAR NAVIGATION -->
-        <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between hidden md:flex">
-            <div>
-                <div class="p-6 border-b border-slate-800">
-                    <h1 class="text-lg font-bold text-white tracking-wide flex items-center gap-2">
-                        <i class="fa-solid fa-layer-group text-blue-500"></i> APEX MEDIA <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">SYDNEY</span>
-                    </h1>
-                    <p class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-circle text-emerald-500 text-[10px]"></i> Office Online (AEST)</p>
+        <aside class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between hidden md:flex">
+            <div class="p-5 space-y-6">
+                <!-- AGENCY LOGO / BRANDING -->
+                <div class="flex items-center gap-3 px-2">
+                    <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-600/30">AM</div>
+                    <div>
+                        <h1 class="font-bold text-sm tracking-wide text-white">Apex Media Agency</h1>
+                        <p class="text-[10px] text-slate-400">Sydney, Australia</p>
+                    </div>
                 </div>
 
-                <nav class="p-4 space-y-1 text-sm font-medium">
-                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-blue-400 bg-blue-500/10 transition"><i class="fa-solid fa-chart-pie w-5"></i> Dashboard</button>
-                    <button onclick="switchTab('invoices')" id="nav-invoices" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-file-invoice-dollar w-5"></i> Invoicing & Payments</button>
-                    <button onclick="switchTab('contracts')" id="nav-contracts" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-file-signature w-5"></i> Contracts & Signatures</button>
-                    <button onclick="switchTab('approvals')" id="nav-approvals" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-clapperboard w-5"></i> Video Approvals</button>
-                    <button onclick="switchTab('calendar')" id="nav-calendar" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-calendar-days w-5"></i> Content Calendar</button>
-                    <button onclick="switchTab('tasks')" id="nav-tasks" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-list-check w-5"></i> Tasks & Projects</button>
-                    <button onclick="switchTab('pipeline')" id="nav-pipeline" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-people-arrows w-5"></i> Lead Pipeline</button>
-                    <button onclick="switchTab('assets')" id="nav-assets" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-folder-open w-5"></i> Brand Assets (Dropbox)</button>
+                <!-- NAVIGATION LINKS -->
+                <nav class="space-y-1 text-xs font-medium">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-blue-400 bg-blue-500/10 transition"><i class="fa-solid fa-chart-pie w-4"></i> Dashboard Overview</button>
+                    <button onclick="switchTab('invoices')" id="nav-invoices" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-file-invoice-dollar w-4"></i> Invoicing & Payments</button>
+                    <button onclick="switchTab('contracts')" id="nav-contracts" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-file-contract w-4"></i> Contracts & Signatures</button>
+                    <button onclick="switchTab('approvals')" id="nav-approvals" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-video w-4"></i> Video Approvals</button>
+                    <button onclick="switchTab('calendar')" id="nav-calendar" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-calendar-days w-4"></i> Content Calendar</button>
+                    <button onclick="switchTab('tasks')" id="nav-tasks" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-list-check w-4"></i> Tasks & Projects</button>
+                    <button onclick="switchTab('pipeline')" id="nav-pipeline" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-chart-line w-4"></i> Lead Pipeline</button>
+                    <button onclick="switchTab('assets')" id="nav-assets" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-folder-open w-4"></i> Brand Assets</button>
                 </nav>
             </div>
 
-            <div class="p-4 border-t border-slate-800 bg-slate-900/50">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-sm">SM</div>
-                    <div class="overflow-hidden">
-                        <p class="text-xs font-semibold text-white">Sam Mondigo</p>
-                        <p class="text-[10px] text-blue-400 truncate">Dedicated Campaign Lead</p>
-                    </div>
+            <!-- SIDEBAR FOOTER / LIVE CLOCK -->
+            <div class="p-4 border-t border-slate-800 text-xs">
+                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+                    <p class="text-slate-400 font-medium">Agency Time</p>
+                    <p id="clock-text" class="font-mono text-blue-400 text-xs font-semibold"></p>
                 </div>
             </div>
         </aside>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-            <header class="h-16 border-b border-slate-800 bg-slate-950/80 backdrop-blur px-8 flex items-center justify-between sticky top-0 z-20">
+        <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-slate-900/50">
+            
+            <!-- TOP HEADER BAR -->
+            <header class="h-16 border-b border-slate-800 bg-slate-950 px-6 flex items-center justify-between sticky top-0 z-40">
                 <div class="flex items-center gap-4">
-                    <span id="current-page-title" class="text-lg font-semibold text-white">Dashboard Overview</span>
+                    <h2 id="current-page-title" class="font-bold text-white text-base">Dashboard Overview</h2>
                 </div>
-                <div class="flex items-center gap-4">
-                    <!-- LIVE CLOCK DISPLAY -->
-                    <div id="live-clock" class="text-xs font-mono bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800 text-blue-400 flex items-center gap-2">
-                        <i class="fa-regular fa-clock"></i> <span id="clock-text">Loading time...</span>
-                    </div>
-                    <span class="text-xs bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 text-slate-300 hidden sm:inline">
-                        <i class="fa-brands fa-dropbox text-blue-400 mr-1.5"></i> Dropbox & MYOB Connected
-                    </span>
-                    <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700 font-semibold text-xs">
-                        ACME
-                    </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 px-3 py-1 rounded-full font-medium"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Client Portal Active</span>
+                    <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-xs text-blue-400">CP</div>
                 </div>
             </header>
 
-            <div class="p-8 max-w-7xl mx-auto w-full space-y-6">
+            <!-- CONTENT SECTIONS -->
+            <div class="p-6 space-y-6 max-w-7xl mx-auto w-full">
 
-                <!-- 1. DASHBOARD -->
-                <section id="tab-dashboard" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
-                            <p class="text-xs text-slate-400 font-medium">Active Retainer (MYOB)</p>
-                            <h3 class="text-2xl font-bold text-white mt-1">$4,850 <span class="text-xs text-emerald-400 font-normal">AUD / mo</span></h3>
+                <!-- 1. DASHBOARD TAB -->
+                <div id="tab-dashboard" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-2">
+                            <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Active Retainer</p>
+                            <h3 class="text-2xl font-bold text-white">$4,850.00 <span class="text-xs font-normal text-slate-400">AUD / mo</span></h3>
+                            <p class="text-[11px] text-emerald-400">Next billing: Sep 27, 2026</p>
                         </div>
-                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
-                            <p class="text-xs text-slate-400 font-medium">Pending Approvals</p>
-                            <h3 class="text-2xl font-bold text-amber-400 mt-1">2 Reels</h3>
+                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-2">
+                            <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Pending Tasks</p>
+                            <h3 id="dash-task-count" class="text-2xl font-bold text-white">2 Items</h3>
+                            <p class="text-[11px] text-blue-400">Managed by Agency Tech & Video Team</p>
                         </div>
-                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
-                            <p class="text-xs text-slate-400 font-medium">Tasks in Progress</p>
-                            <h3 class="text-2xl font-bold text-blue-400 mt-1" id="dash-task-count">3 Items</h3>
-                        </div>
-                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
-                            <p class="text-xs text-slate-400 font-medium">Campaign ROI</p>
-                            <h3 class="text-2xl font-bold text-emerald-400 mt-1">5.4x</h3>
+                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-2">
+                            <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Signed Contracts</p>
+                            <h3 class="text-2xl font-bold text-white">2 Active</h3>
+                            <p class="text-[11px] text-slate-400">Sydney Jurisdiction Law</p>
                         </div>
                     </div>
+                </div>
 
-                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-3">
-                        <h3 class="text-base font-semibold text-white">Interactive Portal with Built-in Notes & Reminders</h3>
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            Clients and team members can now leave notes or remarks on each invoice, contract, video asset, and task for greater convenience and flexibility.
-                        </p>
-                    </div>
-                </section>
-
-                <!-- 2. INVOICING & PAYMENTS -->
-                <section id="tab-invoices" class="space-y-6 hidden">
+                <!-- 2. INVOICES TAB -->
+                <div id="tab-invoices" class="space-y-4 hidden">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">Invoicing & Payments (MYOB Synced)</h2>
-                        <button onclick="openInvoiceModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-plus mr-1.5"></i> Add New Invoice</button>
+                        <h3 class="text-sm font-bold text-white">Client Invoices & Settlement Records</h3>
+                        <button onclick="openInvoiceModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded text-xs font-semibold flex items-center gap-1.5"><i class="fa-solid fa-plus"></i> Add Invoice</button>
                     </div>
                     <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden">
-                        <table class="w-full text-left border-collapse text-sm">
+                        <table class="w-full text-left text-xs">
                             <thead class="bg-slate-900 border-b border-slate-800 text-slate-400">
                                 <tr>
-                                    <th class="p-4 font-medium">Invoice ID & Notes</th>
-                                    <th class="p-4 font-medium">Description</th>
-                                    <th class="p-4 font-medium">Amount (AUD)</th>
-                                    <th class="p-4 font-medium">Timestamp</th>
-                                    <th class="p-4 font-medium">Status</th>
-                                    <th class="p-4 font-medium text-right">Actions</th>
+                                    <th class="p-4">Invoice ID & Notes</th>
+                                    <th class="p-4">Description</th>
+                                    <th class="p-4">Amount</th>
+                                    <th class="p-4">Timestamp</th>
+                                    <th class="p-4">Status</th>
+                                    <th class="p-4 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="invoice-table-body" class="divide-y divide-slate-800">
-                                <!-- Dynamically loaded -->
-                            </tbody>
+                            <tbody id="invoice-table-body" class="divide-y divide-slate-800/60"></tbody>
                         </table>
                     </div>
-                </section>
+                </div>
 
-                <!-- 3. CONTRACTS & SIGNATURES -->
-                <section id="tab-contracts" class="space-y-6 hidden">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">Client Agreements & Contracts</h2>
-                    </div>
-                    <div id="contracts-container" class="space-y-4">
-                        <!-- Dynamically loaded -->
-                    </div>
-                </section>
+                <!-- 3. CONTRACTS TAB -->
+                <div id="tab-contracts" class="space-y-4 hidden">
+                    <h3 class="text-sm font-bold text-white">Legal Agreements & Terms</h3>
+                    <div id="contracts-container" class="space-y-4"></div>
+                </div>
 
-                <!-- 4. VIDEO APPROVALS -->
-                <section id="tab-approvals" class="space-y-6 hidden">
-                    <h2 class="text-xl font-bold text-white">Video Assets & Feedback Approvals</h2>
-                    <div id="videos-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Dynamically loaded -->
-                    </div>
-                </section>
+                <!-- 4. APPROVALS TAB -->
+                <div id="tab-approvals" class="space-y-4 hidden">
+                    <h3 class="text-sm font-bold text-white">Video Creative Approvals & Feedback</h3>
+                    <div id="videos-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
 
-                <!-- 5. CONTENT CALENDAR -->
-                <section id="tab-calendar" class="space-y-6 hidden">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">Content Calendars & Posting Schedules</h2>
-                        <button onclick="downloadPDF('CONTENT CALENDAR & SCHEDULE REPORT\n' + JSON.stringify(appData.calendar, null, 2))" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs"><i class="fa-solid fa-download mr-1"></i> Export Schedule PDF</button>
-                    </div>
+                <!-- 5. CALENDAR TAB -->
+                <div id="tab-calendar" class="space-y-4 hidden">
+                    <h3 class="text-sm font-bold text-white">Content Publishing Schedule</h3>
                     <div id="calendar-container" class="space-y-3"></div>
-                </section>
+                </div>
 
-                <!-- 6. TASKS & PROJECTS -->
-                <section id="tab-tasks" class="space-y-6 hidden">
+                <!-- 6. TASKS TAB -->
+                <div id="tab-tasks" class="space-y-4 hidden">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">Task & Project Management</h2>
-                        <button onclick="openTaskModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-plus mr-1.5"></i> Add New Task</button>
+                        <h3 class="text-sm font-bold text-white">Project Management Board</h3>
+                        <button onclick="openTaskModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded text-xs font-semibold flex items-center gap-1.5"><i class="fa-solid fa-plus"></i> Add New Task</button>
                     </div>
-                    <div id="tasks-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Dynamically loaded -->
-                    </div>
-                </section>
+                    <div id="tasks-container" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                </div>
 
-                <!-- 7. LEAD PIPELINE -->
-                <section id="tab-pipeline" class="space-y-6 hidden">
-                    <h2 class="text-xl font-bold text-white">Lead Pipeline & Client Onboarding</h2>
-                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-center">
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <p class="text-xs text-slate-400">New Inquiries</p>
-                                <h4 class="text-xl font-bold text-white mt-1">24</h4>
-                            </div>
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <p class="text-xs text-slate-400">Discovery Call</p>
-                                <h4 class="text-xl font-bold text-blue-400 mt-1">9</h4>
-                            </div>
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <p class="text-xs text-slate-400">Proposal Sent</p>
-                                <h4 class="text-xl font-bold text-amber-400 mt-1">5</h4>
-                            </div>
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <p class="text-xs text-slate-400">Onboarded Clients</p>
-                                <h4 class="text-xl font-bold text-emerald-400 mt-1">12</h4>
-                            </div>
-                        </div>
+                <!-- 7. PIPELINE TAB -->
+                <div id="tab-pipeline" class="space-y-4 hidden">
+                    <h3 class="text-sm font-bold text-white">Lead Pipeline & Onboarding Status</h3>
+                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl text-xs text-slate-300">
+                        <p class="font-semibold text-white">Active Campaign Lead Generation Status</p>
+                        <p class="text-slate-400 mt-1">All lead forms synced via Meta CAPI and Zapier pipelines to Sydney CRM.</p>
                     </div>
-                </section>
+                </div>
 
-                <!-- 8. BRAND ASSETS (DROPBOX) -->
-                <section id="tab-assets" class="space-y-6 hidden">
+                <!-- 8. BRAND ASSETS TAB -->
+                <div id="tab-assets" class="space-y-4 hidden">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">File & Brand Asset Storage (Dropbox Connected)</h2>
-                        <button onclick="alert('Dropbox file upload simulator: File uploaded successfully at ' + new Date().toLocaleTimeString())" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs transition"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload Asset</button>
+                        <h3 class="text-sm font-bold text-white">Dropbox Brand Assets & Cloud Storage</h3>
+                        <label class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded text-xs font-semibold cursor-pointer flex items-center gap-1.5">
+                            <i class="fa-solid fa-upload"></i> Upload Asset
+                            <input type="file" onchange="uploadNewAsset(event)" class="hidden">
+                        </label>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-folder text-blue-400 text-2xl"></i>
-                                <div>
-                                    <h3 class="text-sm font-semibold text-white">Brand Logos & Guidelines</h3>
-                                    <p class="text-[10px] text-slate-400">Synced via Dropbox</p>
-                                </div>
-                            </div>
-                            <button onclick="downloadPDF('Folder: Brand Logos & Guidelines\nSynced securely via Dropbox.')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-download"></i></button>
-                        </div>
-                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-folder text-blue-400 text-2xl"></i>
-                                <div>
-                                    <h3 class="text-sm font-semibold text-white">Raw Footage & B-Roll</h3>
-                                    <p class="text-[10px] text-slate-400">Synced via Dropbox</p>
-                                </div>
-                            </div>
-                            <button onclick="downloadPDF('Folder: Raw Footage & B-Roll\nSynced securely via Dropbox.')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-download"></i></button>
-                        </div>
+                    <div id="dropbox-assets-container" class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
+                        <!-- Dynamic Dropbox Files -->
                     </div>
-                </section>
+                </div>
 
             </div>
         </main>
-    </div>
-
-    <!-- MODAL FOR ADD/EDIT INVOICE -->
-    <div id="invoiceModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-md w-full space-y-4">
-            <h3 id="invoiceModalTitle" class="text-lg font-bold text-white">Add New Invoice</h3>
-            <input type="hidden" id="invEditIndex" value="-1">
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Invoice ID</label>
-                <input type="text" id="invIdInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="INV-2026-090">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Description</label>
-                <input type="text" id="invDescInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="Social Media Management">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Amount (AUD)</label>
-                <input type="text" id="invAmountInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="$4,850.00">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Client Notes / Remarks</label>
-                <textarea id="invNotesInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-20" placeholder="Iwanan ang notes o instructions dito..."></textarea>
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Status</label>
-                <select id="invStatusInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1">
-                    <option value="Pending Payment">Pending Payment</option>
-                    <option value="Paid">Paid</option>
-                </select>
-            </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeInvoiceModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded text-xs font-semibold">Cancel</button>
-                <button onclick="saveInvoice()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-xs font-semibold">Save Invoice</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL FOR EDIT CONTRACT -->
-    <div id="contractModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-lg w-full space-y-4">
-            <h3 class="text-lg font-bold text-white">Edit Contract / Agreement</h3>
-            <input type="hidden" id="contractEditIndex" value="-1">
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Contract Title</label>
-                <input type="text" id="contractTitleInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Agreement Terms & Details</label>
-                <textarea id="contractTextInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-32"></textarea>
-            </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeContractModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded text-xs font-semibold">Cancel</button>
-                <button onclick="saveContract()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-xs font-semibold">Save Changes</button>
-            </div>
-        </div>
     </div>
 
     <!-- MODAL FOR ADD/EDIT TASK -->
@@ -304,6 +196,80 @@
         </div>
     </div>
 
+    <!-- MODAL FOR ADD/EDIT INVOICE -->
+    <div id="invoiceModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-md w-full space-y-4">
+            <h3 id="invoiceModalTitle" class="text-lg font-bold text-white">Add New Invoice</h3>
+            <input type="hidden" id="invEditIndex" value="-1">
+            <div>
+                <label class="text-xs text-slate-400 font-medium">Invoice ID</label>
+                <input type="text" id="invIdInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="INV-2026-088">
+            </div>
+            <div>
+                <label class="text-xs text-slate-400 font-medium">Description</label>
+                <input type="text" id="invDescInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="August Retainer">
+            </div>
+            <div>
+                <label class="text-xs text-slate-400 font-medium">Amount (AUD)</label>
+                <input type="text" id="invAmountInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="$4,850.00">
+            </div>
+            <div>
+                <label class="text-xs text-slate-400 font-medium">Notes / Instructions</label>
+                <textarea id="invNotesInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-16" placeholder="Payment notes..."></textarea>
+            </div>
+            <div>
+                <label class="text-xs text-slate-400 font-medium">Status</label>
+                <select id="invStatusInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1">
+                    <option value="Pending Payment">Pending Payment</option>
+                    <option value="Paid">Paid</option>
+                </select>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeInvoiceModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded text-xs font-semibold">Cancel</button>
+                <button onclick="saveInvoice()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-xs font-semibold">Save Invoice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FOR EDIT CONTRACT -->
+    <div id="contractModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-lg w-full space-y-4">
+            <h3 class="text-lg font-bold text-white">Edit Contract</h3>
+            <input type="hidden" id="contractEditIndex" value="-1">
+            <div>
+                <label class="text-xs text-slate-400 font-medium">Contract Title</label>
+                <input type="text" id="contractTitleInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1">
+            </div>
+            <div>
+                <label class="text-xs text-slate-400 font-medium">Contract Terms & Clauses</label>
+                <textarea id="contractTextInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-32 font-mono text-xs"></textarea>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeContractModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded text-xs font-semibold">Cancel</button>
+                <button onclick="saveContract()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-xs font-semibold">Save Contract</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- REVISION REQUEST MODAL -->
+    <div id="revisionModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-md w-full space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider">Request Video Revision</h3>
+                <button onclick="closeRevisionModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div>
+                <p id="revisionVideoTitle" class="text-xs text-blue-400 font-semibold mb-2"></p>
+                <label class="block text-xs text-slate-400 mb-1">Revision Notes / Feedback</label>
+                <textarea id="revisionNotesInput" rows="4" class="w-full bg-slate-900 border border-slate-800 rounded p-2.5 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Ilagay ang mga gustong baguhin o i-edit sa video..."></textarea>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeRevisionModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 rounded font-semibold">Cancel</button>
+                <button onclick="submitRevisionRequest()" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-xs text-white font-semibold rounded">Submit Revision</button>
+            </div>
+        </div>
+    </div>
+
     <!-- JAVASCRIPT APP LOGIC -->
     <script>
         // Live Clock Function
@@ -316,7 +282,7 @@
         setInterval(updateLiveClock, 1000);
         updateLiveClock();
 
-        // Main Application State Data with Notes
+        // Main Application State Data
         let appData = {
             invoices: [
                 { id: 'INV-2026-088', desc: 'August Social Media Retainer & Ads', amount: '$4,850.00', notes: 'Include MYOB direct bank transfer receipt upon payment.', timestamp: 'Aug 27, 2026, 09:15 AM', status: 'Pending Payment' },
@@ -327,8 +293,8 @@
                 { title: 'Q3-Q4 Influencer & Content Licensing Addendum', date: 'January 10, 2026', timestamp: 'Jan 10, 2026, 11:00 AM', text: '1. LICENSING: Creator grants non-exclusive distribution rights across Meta & TikTok.\n2. COMPENSATION: Locked per retainer agreement.' }
             ],
             videos: [
-                { title: 'Reel #12 - Bondi Beach Lifestyle Promo (v2)', notes: 'Please check hook timing and brighten the lighting at 0:03.', status: 'Revision Requested', timestamp: 'Aug 26, 2026, 04:45 PM', file: 'Reel_12_Bondi.mp4' },
-                { title: 'Client UGC Testimonial - Sydney CBD Shoot', notes: 'Approved for paid ad scaling.', status: 'Approved ✓', timestamp: 'Aug 25, 2026, 01:20 PM', file: 'UGC_Sydney.mp4' }
+                { id: 'vid-1', title: 'Reel #12 - Bondi Beach Lifestyle Promo (v2)', notes: 'Please check hook timing and brighten the lighting at 0:03.', status: 'Revision Requested', timestamp: 'Aug 26, 2026, 04:45 PM', file: 'Reel_12_Bondi.mp4' },
+                { id: 'vid-2', title: 'Client UGC Testimonial - Sydney CBD Shoot', notes: 'Approved for paid ad scaling.', status: 'Approved ✓', timestamp: 'Aug 25, 2026, 01:20 PM', file: 'UGC_Sydney.mp4' }
             ],
             calendar: [
                 { date: 'Aug 30, 2026', title: 'Behind-the-Scenes Reel: Sydney Office Launch', platform: 'Instagram', status: 'Scheduled' },
@@ -376,6 +342,7 @@
             renderVideos();
             renderCalendar();
             renderTasks();
+            loadDropboxAssets();
         }
 
         // --- INVOICE FUNCTIONS ---
@@ -531,13 +498,15 @@
                             <h3 class="font-semibold text-white text-sm">${v.title}</h3>
                             <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800 text-xs text-slate-300 mt-2">
                                 <span class="text-blue-400 font-semibold">Notes / Feedback:</span> 
-                                <p class="mt-0.5 italic text-slate-400" id="video-note-${idx}">${v.notes || 'No notes yet. Click edit to add.'}</p>
+                                <p class="mt-0.5 italic text-slate-400">${v.notes || 'No notes yet.'}</p>
                             </div>
                             <p class="text-[11px] font-mono text-slate-500 mt-2"><i class="fa-regular fa-clock mr-1"></i> Logged: ${v.timestamp}</p>
                         </div>
                         <div class="flex gap-2 pt-2 border-t border-slate-800">
                             <button onclick="updateVideoStatus(${idx}, 'Approved ✓')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded text-xs font-semibold transition">Approve</button>
-                            <button onclick="editVideoNote(${idx})" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded text-xs font-semibold transition" title="Edit Notes"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="openRevisionModal('${v.id}', '${v.title}')" class="flex-1 bg-amber-600/20 text-amber-400 hover:bg-amber-600/30 border border-amber-500/30 py-2 rounded text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-pen-to-square"></i> Request Revision
+                            </button>
                         </div>
                     </div>
                 `;
@@ -550,21 +519,52 @@
             renderVideos();
         }
 
-        function editVideoNote(index) {
-            let currentNotes = appData.videos[index].notes || '';
-            let newNote = prompt("Enter notes or instructions for this video:", currentNotes);
-            if (newNote !== null) {
-                appData.videos[index].notes = newNote;
-                renderVideos();
+        let currentRevisionVideoId = null;
+        function openRevisionModal(videoId, videoTitle) {
+            currentRevisionVideoId = videoId;
+            document.getElementById('revisionVideoTitle').innerText = `Video: ${videoTitle}`;
+            document.getElementById('revisionNotesInput').value = '';
+            document.getElementById('revisionModal').classList.remove('hidden');
+        }
+
+        function closeRevisionModal() {
+            document.getElementById('revisionModal').classList.add('hidden');
+            currentRevisionVideoId = null;
+        }
+
+        function submitRevisionRequest() {
+            let notes = document.getElementById('revisionNotesInput').value;
+            if (!notes) {
+                alert('Mangyaring ilagay ang iyong feedback para sa revision.');
+                return;
             }
+            let videoItem = appData.videos.find(v => v.id === currentRevisionVideoId);
+            if (videoItem) {
+                videoItem.status = 'Revision Requested';
+                videoItem.notes = notes;
+                videoItem.timestamp = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            }
+            alert('Ang kahilingan para sa revision ay naipadala na sa team!');
+            closeRevisionModal();
+            renderVideos();
         }
 
         // --- CALENDAR FUNCTIONS ---
         function renderCalendar() {
             const container = document.getElementById('calendar-container');
-            container.innerHTML = '';
+            container.innerHTML = `
+                <div class="mb-4 flex justify-between items-center bg-slate-950 p-3 rounded-lg border border-slate-800">
+                    <span class="text-xs text-slate-300"><i class="fa-solid fa-calendar-days text-blue-400 mr-2"></i> Connected to Client Schedule</span>
+                    <button onclick="syncToGoogleCalendar()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-xs text-white rounded font-medium transition-colors">
+                        <i class="fa-brands fa-google mr-1"></i> Sync to Google Calendar
+                    </button>
+                </div>
+            `;
+            let listDiv = document.createElement('div');
+            listDiv.className = "space-y-2";
             appData.calendar.forEach(cal => {
-                container.innerHTML += `
+                let gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(cal.title)}&details=${encodeURIComponent('Platform: ' + cal.platform)}`;
+                listDiv.innerHTML += `
                     <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 flex items-center justify-between text-sm">
                         <div class="flex items-center gap-3">
                             <span class="text-xs bg-blue-500/20 text-blue-400 px-2.5 py-1 rounded font-mono">${cal.date}</span>
@@ -573,10 +573,20 @@
                                 <p class="text-xs text-slate-400">${cal.platform}</p>
                             </div>
                         </div>
-                        <span class="text-xs text-emerald-400">${cal.status}</span>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs text-emerald-400">${cal.status}</span>
+                            <a href="${gCalUrl}" target="_blank" title="Add to Google Calendar" class="text-slate-400 hover:text-blue-400 text-xs px-2.5 py-1 bg-slate-900 rounded border border-slate-800">
+                                <i class="fa-regular fa-calendar-plus"></i>
+                            </a>
+                        </div>
                     </div>
                 `;
             });
+            container.appendChild(listDiv);
+        }
+
+        function syncToGoogleCalendar() {
+            alert('Matagumpay na nai-sync ang mga content schedule sa Google Calendar!');
         }
 
         // --- TASKS FUNCTIONS ---
@@ -647,62 +657,94 @@
             renderTasks();
         }
 
+        // --- DROPBOX ASSETS INTEGRATION ---
+        function loadDropboxAssets() {
+            const container = document.getElementById('dropbox-assets-container');
+            if (!container) return;
+
+            let files = [
+                { name: "Brand_Logo_2026.png", size: "2.4 MB", modified: "2026-08-20", path: "/Brand Assets/Brand_Logo_2026.png" },
+                { name: "Product_Demo_Final.mp4", size: "45.1 MB", modified: "2026-08-25", path: "/Videos/Product_Demo_Final.mp4" },
+                { name: "Guidelines.pdf", size: "1.1 MB", modified: "2026-08-15", path: "/Docs/Guidelines.pdf" }
+            ];
+
+            let html = `<div class="space-y-2">`;
+            files.forEach(file => {
+                html += `
+                    <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 flex items-center justify-between text-xs">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-file-lines text-blue-400 text-base"></i>
+                            <div>
+                                <p class="font-semibold text-white">${file.name}</p>
+                                <p class="text-[10px] text-slate-400">${file.size} • Modified: ${file.modified}</p>
+                            </div>
+                        </div>
+                        <button onclick="downloadDropboxFile('${file.name}')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded border border-slate-700 transition-colors">
+                            <i class="fa-solid fa-download mr-1"></i> Download
+                        </button>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function downloadDropboxFile(fileName) {
+            alert(`Nagsisimula nang i-download ang file mula sa Dropbox: ${fileName}`);
+        }
+
+        function uploadNewAsset(event) {
+            let file = event.target.files[0];
+            if (!file) return;
+            alert(`Ina-upload ang "${file.name}" papunta sa Dropbox folder ng client...`);
+            setTimeout(() => {
+                alert('Matagumpay na na-upload ang file sa Dropbox!');
+                loadDropboxAssets();
+            }, 1000);
+        }
+
         // --- GLOBAL PDF DOWNLOAD GENERATORS ---
         function downloadPDF(contentData) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-
             doc.setFont("Helvetica", "bold");
             doc.setFontSize(15);
             doc.text("APEX MEDIA AGENCY - SYDNEY, AUSTRALIA", 20, 20);
-            
             doc.setFont("Helvetica", "normal");
             doc.setFontSize(10);
             doc.text("Official Portal Certified Copy with Notes & Timestamps", 20, 27);
-            
             doc.setLineWidth(0.4);
             doc.line(20, 31, 190, 31);
-
             doc.setFont("Courier", "normal");
             doc.setFontSize(10);
-            
             const splitText = doc.splitTextToSize(contentData, 170);
             doc.text(splitText, 20, 42);
-
             doc.setFont("Helvetica", "italic");
             doc.setFontSize(8);
             doc.text("Generated securely via Apex Client Portal & MYOB/Dropbox Sync.", 20, 280);
-
             doc.save("Apex_Agency_Record.pdf");
         }
 
         function downloadContractPDF(title, timestamp, textContent) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-
             doc.setFont("Helvetica", "bold");
             doc.setFontSize(14);
             doc.text("APEX MEDIA AGENCY - SYDNEY, AUSTRALIA", 20, 20);
-            
             doc.setFont("Helvetica", "normal");
             doc.setFontSize(10);
             doc.text(title, 20, 28);
             doc.text(`Signed Timestamp: ${timestamp} • Sydney, NSW Jurisdiction`, 20, 34);
-            
             doc.setLineWidth(0.4);
             doc.line(20, 40, 190, 40);
-
             doc.setFont("Courier", "normal");
             doc.setFontSize(10);
-            
             let formattedText = textContent.replace(/\\n/g, '\n').replace(/&quot;/g, '"');
             const splitText = doc.splitTextToSize(formattedText, 170);
             doc.text(splitText, 20, 50);
-
             doc.setFont("Helvetica", "italic");
             doc.setFontSize(8);
             doc.text("Generated securely via Apex Client Portal & MYOB/Dropbox Sync.", 20, 280);
-
             let fileName = title.replace(/[^a-zA-Z0-9]/g, '_') + ".pdf";
             doc.save(fileName);
         }
