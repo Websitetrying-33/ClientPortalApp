@@ -3,294 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Portal | Sydney Agency Workspace</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Apex Media Agency | Client Portal (Sydney)</title>
+    <!-- Tailwind CSS for modern agency aesthetic -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- jsPDF Library para sa tunay na PDF Download -->
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jsPDF library for direct PDF downloading to computer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-800">
+<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white">
 
-    <!-- Navbar: Clean Corporate Slate/Navy Theme -->
-    <nav class="bg-slate-900 text-white shadow-md border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="bg-sky-600 text-white font-bold px-3 py-1.5 rounded-md text-sm tracking-wide">AU</div>
-                <span class="text-lg font-semibold tracking-tight text-slate-100">Client Portal & Dashboard</span>
-            </div>
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between hidden md:flex">
             <div>
-                <span class="text-xs bg-slate-800 text-sky-400 border border-slate-700 font-medium px-3 py-1 rounded-full">Sydney Agency Retainer</span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-
-        <!-- Header / Welcome Section -->
-        <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-                <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Welcome back, Partner</h1>
-                <p class="text-sm text-slate-500 mt-1">Here is the real-time overview of your active campaigns, contracts, assets, and milestones.</p>
-            </div>
-            <div class="text-xs text-slate-600 bg-slate-50 px-4 py-2.5 rounded-lg border border-slate-200">
-                <span class="font-medium text-slate-900">Active Retainer:</span> Q3–Q4 Campaign Scale
-            </div>
-        </div>
-
-        <!-- Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <!-- 1. Invoice & Billing Section -->
-            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
-                        <span class="mr-2 text-sky-600">💳</span> Billing & Invoice
-                    </h3>
-                    <div id="invoiceSection" class="space-y-2 text-sm text-slate-600">
-                        <p><strong>Ref:</strong> <span id="invRef" class="text-slate-900 font-medium">Loading...</span></p>
-                        <p><strong>Period:</strong> <span id="invPeriod" class="text-slate-900 font-medium">Loading...</span></p>
-                        <p><strong>Scope:</strong> <span id="invScope" class="text-slate-900 font-medium">Loading...</span></p>
-                        <p class="text-base font-bold text-slate-900 mt-3 pt-2 border-t border-slate-100">Amount: <span id="invAmount" class="text-sky-600">Loading...</span></p>
-                    </div>
+                <!-- Agency Logo & Sydney Status -->
+                <div class="p-6 border-b border-slate-800">
+                    <h1 class="text-lg font-bold text-white tracking-wide flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-blue-500"></i> APEX MEDIA <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">SYDNEY</span>
+                    </h1>
+                    <p class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-circle text-emerald-500 text-[10px]"></i> Office Online (AEST)</p>
                 </div>
-                <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center">
-                    <span class="text-xs text-slate-500">Status:</span>
-                    <span id="invStatus" class="px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-medium rounded-md border border-amber-200">Pending Payment</span>
-                </div>
+
+                <!-- Navigation Links -->
+                <nav class="p-4 space-y-1 text-sm font-medium">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-blue-400 bg-blue-500/10 transition"><i class="fa-solid fa-chart-pie w-5"></i> Dashboard</button>
+                    <button onclick="switchTab('invoices')" id="nav-invoices" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-file-invoice-dollar w-5"></i> Invoicing & Payments</button>
+                    <button onclick="switchTab('contracts')" id="nav-contracts" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-file-signature w-5"></i> Contracts & Signatures</button>
+                    <button onclick="switchTab('approvals')" id="nav-approvals" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-clapperboard w-5"></i> Video Approvals</button>
+                    <button onclick="switchTab('calendar')" id="nav-calendar" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-calendar-days w-5"></i> Content Calendar</button>
+                    <button onclick="switchTab('tasks')" id="nav-tasks" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-list-check w-5"></i> Tasks & Projects</button>
+                    <button onclick="switchTab('pipeline')" id="nav-pipeline" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-people-arrows w-5"></i> Lead Pipeline</button>
+                    <button onclick="switchTab('assets')" id="nav-assets" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-folder-open w-5"></i> Brand Assets (Dropbox)</button>
+                </nav>
             </div>
 
-            <!-- 2. Agreements & Contracts Section -->
-            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 lg:col-span-2 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
-                        <span class="mr-2 text-sky-600">✍️</span> Agreements & Contracts
-                    </h3>
-                    <div class="space-y-3">
-                        <!-- Contract 1 -->
-                        <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-lg border border-slate-200 hover:bg-slate-100/60 transition">
-                            <div>
-                                <h4 class="font-semibold text-slate-900 text-sm">Q3-Q4 Influencer & Content Licensing Addendum</h4>
-                                <p class="text-xs text-emerald-600 font-medium mt-0.5">✔ Signed & Verified (2026-01-10)</p>
-                            </div>
-                            <button type="button" onclick="openContractModal('Q3-Q4 Influencer & Content Licensing Addendum', '2026-01-10', 'addendum')" class="px-3.5 py-1.5 bg-sky-600 text-white text-xs font-medium rounded-md hover:bg-sky-700 transition cursor-pointer shadow-xs">
-                                View Contract
-                            </button>
-                        </div>
-
-                        <!-- Contract 2 -->
-                        <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-lg border border-slate-200 hover:bg-slate-100/60 transition">
-                            <div>
-                                <h4 class="font-semibold text-slate-900 text-sm">Master Service Agreement & NDA (Sydney Agency)</h4>
-                                <p class="text-xs text-emerald-600 font-medium mt-0.5">✔ Signed & Verified (2025-10-15)</p>
-                            </div>
-                            <button type="button" onclick="openContractModal('Master Service Agreement & NDA (Sydney Agency)', '2025-10-15', 'msa')" class="px-3.5 py-1.5 bg-sky-600 text-white text-xs font-medium rounded-md hover:bg-sky-700 transition cursor-pointer shadow-xs">
-                                View Contract
-                            </button>
-                        </div>
+            <!-- Client Account Manager Card -->
+            <div class="p-4 border-t border-slate-800 bg-slate-900/50">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-sm">SM</div>
+                    <div class="overflow-hidden">
+                        <p class="text-xs font-semibold text-white">Sam Mondigo</p>
+                        <p class="text-[10px] text-blue-400 truncate">Dedicated Campaign Lead</p>
                     </div>
                 </div>
             </div>
+        </aside>
 
-            <!-- 3. Video Assets & Review Section -->
-            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 lg:col-span-3">
-                <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
-                    <span class="mr-2 text-sky-600">🎬</span> Video Assets & Approvals
-                </h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-slate-200 text-sm">
-                        <thead class="bg-slate-50 text-slate-500 uppercase text-xs font-semibold">
-                            <tr>
-                                <th class="px-4 py-3 text-left">Asset Title</th>
-                                <th class="px-4 py-3 text-left">Status</th>
-                                <th class="px-4 py-3 text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="videosTableBody" class="divide-y divide-slate-100 bg-white">
-                            <!-- Dynamically loaded via script -->
-                        </tbody>
-                    </table>
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+            <!-- Top Header Bar -->
+            <header class="h-16 border-b border-slate-800 bg-slate-950/80 backdrop-blur px-8 flex items-center justify-between sticky top-0 z-20">
+                <div class="flex items-center gap-4">
+                    <span id="current-page-title" class="text-lg font-semibold text-white">Dashboard Overview</span>
                 </div>
-            </div>
-
-            <!-- 4. Content Schedule Section -->
-            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200">
-                <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
-                    <span class="mr-2 text-sky-600">📅</span> Content Schedule
-                </h3>
-                <div id="scheduleList" class="space-y-3">
-                    <!-- Dynamically loaded -->
+                <div class="flex items-center gap-4">
+                    <span class="text-xs bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 text-slate-300">
+                        <i class="fa-brands fa-dropbox text-blue-400 mr-1.5"></i> Dropbox & MYOB Connected
+                    </span>
+                    <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700 font-semibold text-xs">
+                        ACME
+                    </div>
                 </div>
-            </div>
+            </header>
 
-            <!-- 5. Leads & Pipeline Metrics -->
-            <div class="bg-white rounded-xl shadow-xs p-6 border border-slate-200 lg:col-span-2">
-                <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center">
-                    <span class="mr-2 text-sky-600">📈</span> Leads & ROI Metrics
-                </h3>
-                <div id="leadsSection" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Dynamically loaded -->
-                </div>
-            </div>
+            <!-- TAB CONTENT CONTAINER -->
+            <div class="p-8 max-w-7xl mx-auto w-full space-y-6">
 
-        </div>
-    </main>
+                <!-- 1. DASHBOARD TAB -->
+                <section id="tab-dashboard" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
+                            <p class="text-xs text-slate-400 font-medium">Active Retainer (MYOB)</p>
+                            <h3 class="text-2xl font-bold text-white mt-1">$4,850 <span class="text-xs text-emerald-400 font-normal">AUD / mo</span></h3>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
+                            <p class="text-xs text-slate-400 font-medium">Pending Approvals</p>
+                            <h3 class="text-2xl font-bold text-amber-400 mt-1">3 Reels</h3>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
+                            <p class="text-xs text-slate-400 font-medium">Tasks in Progress</p>
+                            <h3 class="text-2xl font-bold text-blue-400 mt-1">12 Items</h3>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
+                            <p class="text-xs text-slate-400 font-medium">Campaign ROI</p>
+                            <h3 class="text-2xl font-bold text-emerald-400 mt-1">+314%</h3>
+                        </div>
+                    </div>
 
-    <!-- CONTRACT MODAL POPUP -->
-    <div id="contractModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl max-w-2xl w-full p-6 shadow-xl border border-slate-200 relative max-h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
-                <h3 id="modalTitle" class="text-base font-bold text-slate-900">Contract Title</h3>
-                <button type="button" onclick="closeContractModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold cursor-pointer">&times;</button>
+                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl">
+                        <h3 class="text-base font-semibold text-white mb-2">Welcome to Apex Media Client Portal</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            This is your centralized one-stop-shop for managing deliverables, reviewing reels, checking invoices synced securely from MYOB, and downloading verified agreements directly to your local computer. Click any section on the left sidebar to get started.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 2. INVOICING & PAYMENTS TAB -->
+                <section id="tab-invoices" class="space-y-6 hidden">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-white">Invoicing & Payments (MYOB Synced)</h2>
+                    </div>
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead class="bg-slate-900 border-b border-slate-800 text-slate-400">
+                                <tr>
+                                    <th class="p-4 font-medium">Invoice ID</th>
+                                    <th class="p-4 font-medium">Description</th>
+                                    <th class="p-4 font-medium">Amount (AUD)</th>
+                                    <th class="p-4 font-medium">Due Date</th>
+                                    <th class="p-4 font-medium">Status</th>
+                                    <th class="p-4 font-medium text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800">
+                                <tr>
+                                    <td class="p-4 font-mono text-blue-400">INV-2026-081</td>
+                                    <td class="p-4">August Social Media Retainer & Ads Management</td>
+                                    <td class="p-4 font-semibold">$4,850.00</td>
+                                    <td class="p-4 text-slate-300">15/09/2026</td>
+                                    <td class="p-4"><span class="bg-amber-500/10 text-amber-400 px-2.5 py-1 rounded-full text-xs border border-amber-500/20">Pending Payment</span></td>
+                                    <td class="p-4 text-right">
+                                        <button onclick="downloadPDF('Invoice #INV-2026-081\nDescription: August Social Media Retainer\nAmount: $4,850.00 AUD\nStatus: Pending\nIssued via MYOB Connector')" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs font-medium transition"><i class="fa-solid fa-download mr-1"></i> Download PDF</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-mono text-blue-400">INV-2026-071</td>
+                                    <td class="p-4">July Social Media Retainer & Short Form Video Setup</td>
+                                    <td class="p-4 font-semibold">$4,850.00</td>
+                                    <td class="p-4 text-slate-300">15/08/2026</td>
+                                    <td class="p-4"><span class="bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full text-xs border border-emerald-500/20">Paid</span></td>
+                                    <td class="p-4 text-right">
+                                        <button onclick="downloadPDF('Invoice #INV-2026-071\nDescription: July Retainer\nAmount: $4,850.00 AUD\nStatus: PAID')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded text-xs font-medium transition"><i class="fa-solid fa-download mr-1"></i> Download PDF</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 3. CONTRACTS & SIGNATURES TAB -->
+                <section id="tab-contracts" class="space-y-6 hidden">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-white">Client Agreements, Contracts & E-Signatures</h2>
+                    </div>
+                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
+                        <div class="flex justify-between items-start border-b border-slate-800 pb-4">
+                            <div>
+                                <h3 class="font-semibold text-white">Master Service Agreement (MSA) - FY2026-2027</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Effective Date: October 15, 2025 • Sydney, NSW Jurisdiction</p>
+                            </div>
+                            <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded text-xs border border-emerald-500/20"><i class="fa-solid fa-check mr-1"></i> Executed & Signed</span>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-lg text-xs text-slate-300 space-y-2 h-40 overflow-y-auto font-mono leading-relaxed border border-slate-800">
+                            <p>1. PARTIES: Apex Media Agency (Sydney, Australia) and Client Partner.</p>
+                            <p>2. SCOPE OF WORK: Comprehensive short-form video content creation, campaign scheduling, media buying, and lead generation pipeline optimization.</p>
+                            <p>3. PAYMENT TERMS: Net-30 via MYOB invoice settlement. Retainer auto-renews monthly unless cancelled with 30-day written notice.</p>
+                            <p>4. CONFIDENTIALITY: Both parties agree to protect proprietary marketing funnels and brand assets stored via secure cloud infrastructure.</p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2">
+                            <p class="text-xs text-slate-400">Signed by Authorized Signatory on behalf of Client.</p>
+                            <button onclick="downloadPDF('MASTER SERVICE AGREEMENT\nApex Media Agency & Client Partner\nStatus: Fully Executed & Signed\nJurisdiction: Sydney, NSW Australia')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-download mr-1.5"></i> Download Official Contract PDF</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. VIDEO APPROVALS TAB -->
+                <section id="tab-approvals" class="space-y-6 hidden">
+                    <h2 class="text-xl font-bold text-white">Content & Video Uploads for Feedback & Approval</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
+                            <div class="bg-slate-900 rounded-lg h-48 flex items-center justify-center border border-slate-800 relative group">
+                                <i class="fa-solid fa-play text-4xl text-blue-500 bg-slate-950/80 p-4 rounded-full shadow"></i>
+                                <span class="absolute top-3 left-3 text-xs bg-black/60 px-2 py-1 rounded text-slate-300">Reel_01_ProductDemo.mp4</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-white">Product Launch TikTok / IG Reel</h3>
+                                <p class="text-xs text-slate-400 mt-1">Uploaded via Dropbox Sync • Version 2 (Revisions applied)</p>
+                            </div>
+                            <div class="flex gap-2 pt-2">
+                                <button onclick="alert('Video marked as APPROVED! Notification sent to video team.')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded text-xs font-semibold transition"><i class="fa-solid fa-check mr-1"></i> Approve Reel</button>
+                                <button onclick="let note = prompt('Enter revision notes for the editor:'); if(note) alert('Revision requested submitted successfully!');" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 rounded text-xs font-semibold transition"><i class="fa-solid fa-pen-to-square mr-1"></i> Request Changes</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
+                            <div class="bg-slate-900 rounded-lg h-48 flex items-center justify-center border border-slate-800 relative group">
+                                <i class="fa-solid fa-play text-4xl text-blue-500 bg-slate-950/80 p-4 rounded-full shadow"></i>
+                                <span class="absolute top-3 left-3 text-xs bg-black/60 px-2 py-1 rounded text-slate-300">Reel_02_BehindTheScenes.mp4</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-white">Behind the Scenes Sydney Office</h3>
+                                <p class="text-xs text-slate-400 mt-1">Uploaded via Dropbox Sync • Version 1</p>
+                            </div>
+                            <div class="flex gap-2 pt-2">
+                                <button onclick="alert('Video marked as APPROVED!')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded text-xs font-semibold transition"><i class="fa-solid fa-check mr-1"></i> Approve Reel</button>
+                                <button onclick="let note = prompt('Enter revision notes:'); if(note) alert('Revision requested!');" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 rounded text-xs font-semibold transition"><i class="fa-solid fa-pen-to-square mr-1"></i> Request Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. CONTENT CALENDAR TAB -->
+                <section id="tab-calendar" class="space-y-6 hidden">
+                    <h2 class="text-xl font-bold text-white">Content Calendars & Posting Schedules</h2>
+                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                            <span class="font-medium text-white">August / September 2026 Schedule (AEST)</span>
+                            <button onclick="downloadPDF('CONTENT CALENDAR & POSTING SCHEDULE\nWeek 1: Product Teaser (IG, TikTok)\nWeek 2: Customer Testimonial Spotlight\nWeek 3: Behind the Scenes Creative\nWeek 4: Flash Sale Announcement')" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs transition"><i class="fa-solid fa-download mr-1"></i> Export Schedule PDF</button>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="bg-slate-900 p-3 rounded-lg flex items-center justify-between border border-slate-800">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xs bg-blue-500/20 text-blue-400 px-2.5 py-1 rounded font-mono">Aug 30, 2026</span>
+                                    <span>Product Teaser Reel (Instagram & TikTok)</span>
+                                </div>
+                                <span class="text-xs text-emerald-400">Scheduled (10:00 AM AEST)</span>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded-lg flex items-center justify-between border border-slate-800">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xs bg-blue-500/20 text-blue-400 px-2.5 py-1 rounded font-mono">Sep 02, 2026</span>
+                                    <span>Customer Success Story Carousel</span>
+                                </div>
+                                <span class="text-xs text-amber-400">Pending Approval</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. TASKS & PROJECTS TAB -->
+                <section id="tab-tasks" class="space-y-6 hidden">
+                    <h2 class="text-xl font-bold text-white">Task & Project Management</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2">Backlog / To-Do</h3>
+                            <div class="bg-slate-900 p-3 rounded border border-slate-800 text-xs space-y-1">
+                                <p class="font-semibold text-white">Setup Meta Pixel & CAPI</p>
+                                <p class="text-slate-400">Assigned to: Tech Team</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 border-b border-slate-800 pb-2">In Progress</h3>
+                            <div class="bg-slate-900 p-3 rounded border border-slate-800 text-xs space-y-1">
+                                <p class="font-semibold text-white">Edit Q4 Campaign Reels</p>
+                                <p class="text-slate-400">Assigned to: Video Editor</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 border-b border-slate-800 pb-2">Completed</h3>
+                            <div class="bg-slate-900 p-3 rounded border border-slate-800 text-xs space-y-1">
+                                <p class="font-semibold text-white">Brand Asset Upload & Organization</p>
+                                <p class="text-slate-400">Synced via Dropbox</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. LEAD PIPELINE TAB -->
+                <section id="tab-pipeline" class="space-y-6 hidden">
+                    <h2 class="text-xl font-bold text-white">Lead Pipeline & Client Onboarding</h2>
+                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
+                        <p class="text-xs text-slate-400">Real-time status of incoming prospects through your agency funnel:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-center">
+                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
+                                <p class="text-xs text-slate-400">New Inquiries</p>
+                                <h4 class="text-xl font-bold text-white mt-1">24</h4>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
+                                <p class="text-xs text-slate-400">Discovery Call</p>
+                                <h4 class="text-xl font-bold text-blue-400 mt-1">9</h4>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
+                                <p class="text-xs text-slate-400">Proposal Sent</p>
+                                <h4 class="text-xl font-bold text-amber-400 mt-1">5</h4>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
+                                <p class="text-xs text-slate-400">Onboarded Clients</p>
+                                <h4 class="text-xl font-bold text-emerald-400 mt-1">12</h4>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 8. BRAND ASSETS (DROPBOX) TAB -->
+                <section id="tab-assets" class="space-y-6 hidden">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-white">File & Brand Asset Storage (Dropbox Connected)</h2>
+                        <button onclick="alert('Opening Dropbox File Picker...')" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs transition"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload Asset</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center gap-3">
+                            <i class="fa-solid fa-folder text-blue-400 text-2xl"></i>
+                            <div>
+                                <h3 class="text-sm font-semibold text-white">Brand Logos & Guidelines</h3>
+                                <p class="text-[10px] text-slate-400">Synced via Dropbox • 14 files</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center gap-3">
+                            <i class="fa-solid fa-folder text-blue-400 text-2xl"></i>
+                            <div>
+                                <h3 class="text-sm font-semibold text-white">Raw Footage & B-Roll</h3>
+                                <p class="text-[10px] text-slate-400">Synced via Dropbox • 4.2 GB</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center gap-3">
+                            <i class="fa-solid fa-folder text-blue-400 text-2xl"></i>
+                            <div>
+                                <h3 class="text-sm font-semibold text-white">Client Approved Assets</h3>
+                                <p class="text-[10px] text-slate-400">Synced via Dropbox • Ready for ads</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
             </div>
-            <div id="modalBody" class="overflow-y-auto flex-grow text-sm text-slate-600 space-y-3 pr-2 bg-slate-50 p-4 rounded-lg border border-slate-200 max-h-[50vh] leading-relaxed">
-                <!-- Contract text content goes here -->
-            </div>
-            <div class="border-t border-slate-100 pt-4 mt-4 flex justify-end space-x-3">
-                <button type="button" onclick="downloadCurrentContract()" class="px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-md hover:bg-emerald-700 transition shadow-xs cursor-pointer">
-                    Download PDF Copy
-                </button>
-                <button type="button" onclick="closeContractModal()" class="px-4 py-2 bg-slate-200 text-slate-700 text-xs font-semibold rounded-md hover:bg-slate-300 transition cursor-pointer">
-                    Close
-                </button>
-            </div>
-        </div>
+        </main>
     </div>
 
-    <!-- JavaScript para sa lahat ng functions at PDF Generator -->
+    <!-- SCRIPT LOGIC & PDF DOWNLOAD ENGINE -->
     <script>
-        const contractTexts = {
-            'addendum': `
-                <p><strong>Q3-Q4 INFLUENCER & CONTENT LICENSING ADDENDUM</strong></p>
-                <p>This Addendum is entered into and made effective as of January 10, 2026, by and between the Sydney Agency and the designated Creator/Contractor.</p>
-                <p><strong>1. Scope of Licensing:</strong> The Creator grants the Agency non-exclusive rights to distribute, edit, and promote short-form video assets across Meta and TikTok ad placements.</p>
-                <p><strong>2. Compensation & Terms:</strong> Retainer terms are locked in accordance with the primary Master Service Agreement. Deliverables include weekly reels and localized ad variants.</p>
-                <p><strong>3. Verification:</strong> This document has been digitally signed and verified by authorized representatives.</p>
-            `,
-            'msa': `
-                <p><strong>MASTER SERVICE AGREEMENT & NDA (SYDNEY AGENCY)</strong></p>
-                <p>Effective Date: October 15, 2025.</p>
-                <p><strong>1. Confidentiality:</strong> The Contractor agrees to maintain strict confidentiality regarding all client data, marketing analytics, and proprietary outreach frameworks.</p>
-                <p><strong>2. Independent Contractor Status:</strong> Services provided under this agreement are strictly on an independent contractor basis.</p>
-                <p><strong>3. Term & Termination:</strong> Either party may terminate the engagement with 30 days written notice. All pending milestones and invoices must be settled prior to offboarding.</p>
-            `
-        };
+        function switchTab(tabId) {
+            // Hide all sections
+            const tabs = ['dashboard', 'invoices', 'contracts', 'approvals', 'calendar', 'tasks', 'pipeline', 'assets'];
+            tabs.forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                const navBtn = document.getElementById('nav-' + t);
+                if(navBtn) {
+                    navBtn.className = "w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition";
+                }
+            });
 
-        let currentContractData = { title: '', text: '' };
+            // Show selected section
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const activeNav = document.getElementById('nav-' + tabId);
+            if(activeNav) {
+                activeNav.className = "w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-blue-400 bg-blue-500/10 transition";
+            }
 
-        function openContractModal(title, date, type) {
-            const fullTitle = title + ' (' + date + ')';
-            currentContractData.title = fullTitle;
-            
-            const textContent = contractTexts[type] || 'No contract details available.';
-            currentContractData.text = textContent.replace(/<[^>]*>?/gm, ''); // Tanggalin ang HTML tags para malinis sa PDF
-
-            document.getElementById('modalTitle').innerText = fullTitle;
-            document.getElementById('modalBody').innerHTML = textContent;
-
-            document.getElementById('contractModal').classList.remove('hidden');
+            // Update Header Title
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'invoices': 'Invoicing & Payments (MYOB Synced)',
+                'contracts': 'Client Agreements & Signatures',
+                'approvals': 'Video Approvals & Feedback',
+                'calendar': 'Content Calendar & Posting Schedule',
+                'tasks': 'Task & Project Management',
+                'pipeline': 'Lead Pipeline & Onboarding',
+                'assets': 'Brand Asset Storage (Dropbox)'
+            };
+            document.getElementById('current-page-title').innerText = titles[tabId];
         }
 
-        function closeContractModal() {
-            document.getElementById('contractModal').classList.add('hidden');
-        }
-
-        // Function para mag-download ng tunay na PDF gamit ang jsPDF
-        function downloadCurrentContract() {
+        // Direct PDF Download Function using jsPDF (downloads straight to computer)
+        function downloadPDF(contentData) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
 
             doc.setFont("Helvetica", "bold");
-            doc.setFontSize(14);
-            doc.text(currentContractData.title, 15, 20);
-
+            doc.setFontSize(16);
+            doc.text("APEX MEDIA AGENCY - SYDNEY, AUSTRALIA", 20, 20);
+            
             doc.setFont("Helvetica", "normal");
+            doc.setFontSize(11);
+            doc.text("Official Client Portal Document Record", 20, 28);
+            
+            doc.setLineWidth(0.5);
+            doc.line(20, 32, 190, 32);
+
+            doc.setFont("Courier", "normal");
             doc.setFontSize(10);
             
-            const splitText = doc.splitTextToSize(currentContractData.text, 180);
-            doc.text(splitText, 15, 30);
+            // Split multiline text
+            const splitText = doc.splitTextToSize(contentData, 170);
+            doc.text(splitText, 20, 45);
 
-            const fileName = currentContractData.title.toLowerCase().replace(/[^a-z0-9]/g, '_') + '.pdf';
-            doc.save(fileName);
+            doc.setFont("Helvetica", "italic");
+            doc.setFontSize(9);
+            doc.text("Generated securely via Apex Client Portal & MYOB/Dropbox Sync.", 20, 280);
+
+            // Save PDF directly to user computer
+            doc.save("Apex_Media_Official_Document.pdf");
         }
-
-        async function loadDashboardData() {
-            try {
-                const response = await fetch('/api/all-data');
-                const data = await response.json();
-
-                if (data.invoice) {
-                    document.getElementById('invRef').innerText = data.invoice.invoiceRef || 'N/A';
-                    document.getElementById('invPeriod').innerText = data.invoice.billingPeriod || 'N/A';
-                    document.getElementById('invScope').innerText = data.invoice.scope || 'N/A';
-                    document.getElementById('invAmount').innerText = data.invoice.amount || 'N/A';
-                    document.getElementById('invStatus').innerText = data.invoice.status || 'Pending';
-                }
-
-                const videosTable = document.getElementById('videosTableBody');
-                videosTable.innerHTML = '';
-                if (data.videos && data.videos.length > 0) {
-                    data.videos.forEach(v => {
-                        let statusColor = v.status.includes('Approved') ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-amber-700 bg-amber-50 border-amber-200';
-                        videosTable.innerHTML += `
-                            <tr>
-                                <td class="px-4 py-3 font-medium text-slate-900">${v.title}</td>
-                                <td class="px-4 py-3"><span class="px-2.5 py-1 rounded-md text-xs font-medium border ${statusColor}">${v.status}</span></td>
-                                <td class="px-4 py-3 text-right">
-                                    <button type="button" onclick="updateVideoStatus(${v.id}, 'Approved ✓')" class="px-3 py-1 bg-emerald-600 text-white text-xs font-medium rounded hover:bg-emerald-700 mr-1.5 cursor-pointer shadow-xs">Approve</button>
-                                    <button type="button" onclick="updateVideoStatus(${v.id}, 'Revision Requested')" class="px-3 py-1 bg-slate-100 text-slate-700 border border-slate-300 text-xs font-medium rounded hover:bg-slate-200 cursor-pointer">Revise</button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                }
-
-                const schedList = document.getElementById('scheduleList');
-                schedList.innerHTML = '';
-                if (data.schedule && data.schedule.length > 0) {
-                    data.schedule.forEach(s => {
-                        schedList.innerHTML += `
-                            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-sm">
-                                <span class="text-[11px] font-bold text-sky-600 uppercase tracking-wider">${s.platform}</span>
-                                <p class="font-semibold text-slate-900 mt-0.5">${s.postTitle}</p>
-                                <p class="text-xs text-slate-500 mt-1">${s.scheduleDate}</p>
-                            </div>
-                        `;
-                    });
-                }
-
-                if (data.leads) {
-                    document.getElementById('leadsSection').innerHTML = `
-                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <p class="text-xs font-medium text-slate-500">Qualified Leads Generated</p>
-                            <p class="text-xl font-bold text-slate-900 mt-1">${data.leads.qualifiedLeads || '0'}</p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <p class="text-xs font-medium text-slate-500">Booked Calls</p>
-                            <p class="text-xl font-bold text-slate-900 mt-1">${data.leads.bookedCalls || '0'}</p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <p class="text-xs font-medium text-slate-500">Estimated Campaign ROI</p>
-                            <p class="text-xl font-bold text-emerald-600 mt-1">${data.leads.roi || '0x'}</p>
-                        </div>
-                    `;
-                }
-
-            } catch (err) {
-                console.error('Error loading dashboard data:', err);
-            }
-        }
-
-        async function updateVideoStatus(id, status) {
-            await fetch('/api/video/status', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, status })
-            });
-            loadDashboardData();
-        }
-
-        loadDashboardData();
     </script>
 </body>
 </html>
