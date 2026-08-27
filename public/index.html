@@ -323,6 +323,18 @@
 
         function switchTab(tabId) {
             const tabs = ['dashboard', 'invoices', 'contracts', 'approvals', 'calendar', 'tasks', 'pipeline', 'assets'];
+            
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'invoices': 'Invoicing & Payments',
+                'contracts': 'Contracts & Signatures',
+                'approvals': 'Video Approvals & Feedback',
+                'calendar': 'Content Calendar',
+                'tasks': 'Tasks & Project Management',
+                'pipeline': 'Lead Pipeline & Onboarding',
+                'assets': 'Brand Assets & Storage'
+            };
+
             tabs.forEach(t => {
                 document.getElementById('tab-' + t).classList.add('hidden');
                 const btn = document.getElementById('nav-' + t);
@@ -332,6 +344,8 @@
             document.getElementById('tab-' + tabId).classList.remove('hidden');
             const activeBtn = document.getElementById('nav-' + tabId);
             if(activeBtn) activeBtn.className = "w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-blue-400 bg-blue-500/10 transition";
+
+            document.getElementById('current-page-title').innerText = titles[tabId] || 'Client Portal';
 
             renderAll();
         }
