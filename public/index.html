@@ -470,6 +470,8 @@
             const container = document.getElementById('contracts-container');
             container.innerHTML = '';
             appData.contracts.forEach((c, index) => {
+                let safeText = c.text.replace(/\n/g, '\\n').replace(/"/g, '&quot;');
+                
                 container.innerHTML += `
                     <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
                         <div class="flex justify-between items-start border-b border-slate-800 pb-4">
@@ -482,7 +484,7 @@
                         <div class="bg-slate-900 p-4 rounded-lg text-xs text-slate-300 font-mono leading-relaxed border border-slate-800 whitespace-pre-line">${c.text}</div>
                         <div class="flex justify-end gap-2 pt-2">
                             <button onclick="editContract(${index})" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-pen mr-1.5"></i> Edit Contract</button>
-                            <button onclick="downloadPDF('${c.title}\\nTimestamp: ${c.timestamp}\\n\\n${c.text}')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-download mr-1.5"></i> Download PDF Copy</button>
+                            <button onclick="downloadContractPDF('${c.title}', '${c.timestamp}', '${safeText}')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-download mr-1.5"></i> Download PDF Copy</button>
                         </div>
                     </div>
                 `;
@@ -645,7 +647,7 @@
             renderTasks();
         }
 
-        // --- GLOBAL PDF DOWNLOAD GENERATOR ---
+        // --- GLOBAL PDF DOWNLOAD GENERATORS ---
         function downloadPDF(contentData) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -672,6 +674,37 @@
             doc.text("Generated securely via Apex Client Portal & MYOB/Dropbox Sync.", 20, 280);
 
             doc.save("Apex_Agency_Record.pdf");
+        }
+
+        function downloadContractPDF(title, timestamp, textContent) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFont("Helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text("APEX MEDIA AGENCY - SYDNEY, AUSTRALIA", 20, 20);
+            
+            doc.setFont("Helvetica", "normal");
+            doc.setFontSize(10);
+            doc.text(title, 20, 28);
+            doc.text(`Signed Timestamp: ${timestamp} • Sydney, NSW Jurisdiction`, 20, 34);
+            
+            doc.setLineWidth(0.4);
+            doc.line(20, 40, 190, 40);
+
+            doc.setFont("Courier", "normal");
+            doc.setFontSize(10);
+            
+            let formattedText = textContent.replace(/\\n/g, '\n').replace(/&quot;/g, '"');
+            const splitText = doc.splitTextToSize(formattedText, 170);
+            doc.text(splitText, 20, 50);
+
+            doc.setFont("Helvetica", "italic");
+            doc.setFontSize(8);
+            doc.text("Generated securely via Apex Client Portal & MYOB/Dropbox Sync.", 20, 280);
+
+            let fileName = title.replace(/[^a-zA-Z0-9]/g, '_') + ".pdf";
+            doc.save(fileName);
         }
 
         // Initial Load
