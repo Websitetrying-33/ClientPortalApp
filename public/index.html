@@ -91,7 +91,7 @@
                     <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-3">
                         <h3 class="text-base font-semibold text-white">Interactive Portal with Built-in Notes & Reminders</h3>
                         <p class="text-sm text-slate-400 leading-relaxed">
-                            Maaari na ngayong mag-iwan ng notes o remarks ang kliyente o team sa bawat invoice, video asset, at task para hindi makalimutan ang mga detalye.
+                            Maaari na ngayong mag-iwan ng notes o remarks ang kliyente o team sa bawat invoice, kontrata, video asset, at task para mas maging convenient at flexible.
                         </p>
                     </div>
                 </section>
@@ -249,6 +249,26 @@
             <div class="flex justify-end gap-2 pt-2">
                 <button onclick="closeInvoiceModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded text-xs font-semibold">Cancel</button>
                 <button onclick="saveInvoice()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-xs font-semibold">Save Invoice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FOR EDIT CONTRACT -->
+    <div id="contractModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-lg w-full space-y-4">
+            <h3 class="text-lg font-bold text-white">Edit Contract / Agreement</h3>
+            <input type="hidden" id="contractEditIndex" value="-1">
+            <div>
+                <label class="text-xs text-slate-400 font-medium">Contract Title</label>
+                <input type="text" id="contractTitleInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1">
+            </div>
+            <div>
+                <label class="text-xs text-slate-400 font-medium">Agreement Terms & Details</label>
+                <textarea id="contractTextInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-32"></textarea>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeContractModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded text-xs font-semibold">Cancel</button>
+                <button onclick="saveContract()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-xs font-semibold">Save Changes</button>
             </div>
         </div>
     </div>
@@ -449,7 +469,7 @@
         function renderContracts() {
             const container = document.getElementById('contracts-container');
             container.innerHTML = '';
-            appData.contracts.forEach((c) => {
+            appData.contracts.forEach((c, index) => {
                 container.innerHTML += `
                     <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
                         <div class="flex justify-between items-start border-b border-slate-800 pb-4">
@@ -460,12 +480,36 @@
                             <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded text-xs border border-emerald-500/25"><i class="fa-solid fa-check mr-1"></i> Executed</span>
                         </div>
                         <div class="bg-slate-900 p-4 rounded-lg text-xs text-slate-300 font-mono leading-relaxed border border-slate-800 whitespace-pre-line">${c.text}</div>
-                        <div class="flex justify-end pt-2">
+                        <div class="flex justify-end gap-2 pt-2">
+                            <button onclick="editContract(${index})" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-pen mr-1.5"></i> Edit Contract</button>
                             <button onclick="downloadPDF('${c.title}\\nTimestamp: ${c.timestamp}\\n\\n${c.text}')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-download mr-1.5"></i> Download PDF Copy</button>
                         </div>
                     </div>
                 `;
             });
+        }
+
+        function editContract(index) {
+            document.getElementById('contractEditIndex').value = index;
+            let c = appData.contracts[index];
+            document.getElementById('contractTitleInput').value = c.title;
+            document.getElementById('contractTextInput').value = c.text;
+            document.getElementById('contractModal').classList.remove('hidden');
+        }
+
+        function closeContractModal() {
+            document.getElementById('contractModal').classList.add('hidden');
+        }
+
+        function saveContract() {
+            let index = parseInt(document.getElementById('contractEditIndex').value);
+            if (index >= 0) {
+                appData.contracts[index].title = document.getElementById('contractTitleInput').value;
+                appData.contracts[index].text = document.getElementById('contractTextInput').value;
+                appData.contracts[index].timestamp = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            }
+            closeContractModal();
+            renderContracts();
         }
 
         // --- VIDEO APPROVALS FUNCTIONS ---
