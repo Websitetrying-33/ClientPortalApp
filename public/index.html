@@ -309,9 +309,9 @@
                 { id: 3, title: 'Brand Asset Upload & Organisation', notes: 'Synchronised securely from client Dropbox folder.', status: 'completed', assignee: 'Dropbox Sync', timestamp: '26 Aug 2026, 03:10 PM' }
             ],
             assets: [
-                { name: "Brand_Logo_2026.png", size: "2.4 MB", modified: "20 Aug 2026", type: "image/png" },
-                { name: "Product_Demo_Final.mp4", size: "45.1 MB", modified: "25 Aug 2026", type: "video/mp4" },
-                { name: "Guidelines.pdf", size: "1.1 MB", modified: "15 Aug 2026", type: "application/pdf" }
+                { name: "Brand_Logo_2026.png", size: "2.4 MB", modified: "20 Aug 2026", type: "image/png", content: "Apex Media Agency Brand Logo Asset Placeholder" },
+                { name: "Product_Demo_Final.mp4", size: "45.1 MB", modified: "25 Aug 2026", type: "video/mp4", content: "Apex Media Agency Video Asset Placeholder" },
+                { name: "Guidelines.pdf", size: "1.1 MB", modified: "15 Aug 2026", type: "application/pdf", content: "APEX MEDIA AGENCY - BRAND GUIDELINES\n\n1. Typography: Helvetica / Inter\n2. Primary Color: Deep Blue (#2563EB)\n3. Tone: Professional, authoritative, Australian English standard.\n4. Jurisdiction: Sydney, New South Wales, Australia." }
             ]
         };
 
@@ -665,7 +665,7 @@
             renderTasks();
         }
 
-        // --- DROPBOX ASSETS INTEGRATION & DOWNLOAD/UPLOAD ---
+        // --- DROPBOX ASSETS INTEGRATION & DOWNLOAD/UPLOAD/DELETE ---
         function loadDropboxAssets() {
             const container = document.getElementById('dropbox-assets-container');
             if (!container) return;
@@ -681,9 +681,14 @@
                                 <p class="text-[10px] text-slate-400">${file.size} • Modified: ${file.modified}</p>
                             </div>
                         </div>
-                        <button onclick="downloadAsset(${index})" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded border border-slate-700 transition-colors flex items-center gap-1.5 font-medium">
-                            <i class="fa-solid fa-download"></i> Download
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="downloadAsset(${index})" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded border border-slate-700 transition-colors flex items-center gap-1.5 font-medium" title="Download Asset">
+                                <i class="fa-solid fa-download"></i> Download
+                            </button>
+                            <button onclick="deleteAsset(${index})" class="px-2.5 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded border border-rose-500/30 transition-colors" title="Delete Asset">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
                 `;
             });
@@ -693,9 +698,15 @@
 
         function downloadAsset(index) {
             let file = appData.assets[index];
-            // Gumawa ng dummy downloadable blob para ma-download talaga ng browser
-            const dummyContent = `Apex Media Agency - Certified Asset Record\nFile Name: ${file.name}\nSize: ${file.size}\nModified: ${file.modified}\nJurisdiction: Sydney, Australia`;
-            const blob = new Blob([dummyContent], { type: 'text/plain' });
+            let mimeType = file.type || 'text/plain';
+            let fileContent = file.content || `Apex Media Agency - Certified Asset Record\nFile Name: ${file.name}\nSize: ${file.size}\nModified: ${file.modified}\nJurisdiction: Sydney, Australia`;
+            
+            // Kung PDF, ayusin ang tamang format para hindi mag-error ang PDF viewer
+            if (file.name.endsWith('.pdf')) {
+                mimeType = 'application/pdf';
+            }
+
+            const blob = new Blob([fileContent], { type: mimeType });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -706,6 +717,13 @@
             document.body.removeChild(a);
         }
 
+        function deleteAsset(index) {
+            if (confirm("Are you sure you want to delete this asset from the repository?")) {
+                appData.assets.splice(index, 1);
+                loadDropboxAssets();
+            }
+        }
+
         function uploadNewAsset(event) {
             let uploadedFile = event.target.files[0];
             if (!uploadedFile) return;
@@ -713,16 +731,26 @@
             let fileSizeMB = (uploadedFile.size / (1024 * 1024)).toFixed(1) + ' MB';
             let todayStr = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
 
-            // Idagdag agad sa ating appData assets list para makita sa UI
-            appData.assets.unshift({
-                name: uploadedFile.name,
-                size: fileSizeMB,
-                modified: todayStr,
-                type: uploadedFile.type
-            });
+            // Basahin ang file para maging maayos ang downloadable blob pagka-download
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                appData.assets.unshift({
+                    name: uploadedFile.name,
+                    size: fileSizeMB,
+                    modified: todayStr,
+                    type: uploadedFile.type,
+                    content: e.target.result
+                });
+                loadDropboxAssets();
+                alert(`File "${uploadedFile.name}" has been successfully uploaded to your Dropbox brand folder and is now visible below.`);
+            };
+            
+            if (uploadedFile.type.includes('text') || uploadedFile.name.endsWith('.pdf') || uploadedFile.name.endsWith('.txt')) {
+                reader.readAsText(uploadedFile);
+            } else {
+                reader.readAsDataURL(uploadedFile);
+            }
 
-            loadDropboxAssets();
-            alert(`File "${uploadedFile.name}" has been successfully uploaded to your Dropbox brand folder and is now visible below.`);
             // Reset input
             event.target.value = '';
         }
