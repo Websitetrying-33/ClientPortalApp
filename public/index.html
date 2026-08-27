@@ -1,45 +1,281 @@
-<!-- Sa loob ng Contracts Section ng index.html mo -->
-<div class="space-y-3">
-    <!-- Contract 1 -->
-    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
-        <div>
-            <h4 class="font-semibold text-gray-800">Q3-Q4 Influencer & Content Licensing Addendum</h4>
-            <p class="text-sm text-green-600">✔ Signed & Verified (2026-01-10)</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Portal - Sydney Agency</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans antialiased text-gray-900">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 text-white font-bold p-2 rounded-lg">CP</div>
+                <span class="text-xl font-bold text-gray-800">Client Portal & Dashboard</span>
+            </div>
+            <div>
+                <span class="text-sm bg-green-100 text-green-800 font-medium px-3 py-1 rounded-full">Live Client Workspace</span>
+            </div>
         </div>
-        <button onclick="openContractModal('Q3-Q4 Influencer & Content Licensing Addendum', '2026-01-10', 'addendum')" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition">
-            View Contract
-        </button>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Header / Welcome Section -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Welcome back, Partner!</h1>
+                <p class="text-sm text-gray-500">Here is the real-time status of your campaigns, contracts, assets, and invoices.</p>
+            </div>
+            <div class="text-sm text-gray-600 bg-gray-50 px-4 py-2 rounded-lg border">
+                <strong>Active Retainer:</strong> Sydney Agency Q3-Q4 Campaign
+            </div>
+        </div>
+
+        <!-- Grid Layout para sa mga Sections -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- 1. Invoice & Billing Section -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">💳</span> Billing & Invoice
+                    </h3>
+                    <div id="invoiceSection" class="space-y-2 text-sm text-gray-600">
+                        <p><strong>Ref:</strong> <span id="invRef">Loading...</span></p>
+                        <p><strong>Period:</strong> <span id="invPeriod">Loading...</span></p>
+                        <p><strong>Scope:</strong> <span id="invScope">Loading...</span></p>
+                        <p class="text-base font-bold text-gray-900 mt-2">Amount: <span id="invAmount">Loading...</span></p>
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-gray-100">
+                    <span id="invStatus" class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">Pending Payment</span>
+                </div>
+            </div>
+
+            <!-- 2. Agreements & Contracts Section (May View Contract Buttons na) -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 lg:col-span-2 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">✍️</span> Agreements & Contracts
+                    </h3>
+                    <div class="space-y-3">
+                        <!-- Contract 1 -->
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm">Q3-Q4 Influencer & Content Licensing Addendum</h4>
+                                <p class="text-xs text-green-600">✔ Signed & Verified (2026-01-10)</p>
+                            </div>
+                            <button onclick="openContractModal('Q3-Q4 Influencer & Content Licensing Addendum', '2026-01-10', 'addendum')" class="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition">
+                                View Contract
+                            </button>
+                        </div>
+
+                        <!-- Contract 2 -->
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm">Master Service Agreement & NDA (Sydney Agency)</h4>
+                                <p class="text-xs text-green-600">✔ Signed & Verified (2025-10-15)</p>
+                            </div>
+                            <button onclick="openContractModal('Master Service Agreement & NDA (Sydney Agency)', '2025-10-15', 'msa')" class="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition">
+                                View Contract
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Video Assets & Review Section -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 lg:col-span-3">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="mr-2">🎬</span> Video Assets & Approvals
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+                            <tr>
+                                <th class="px-4 py-3 text-left">Asset Title</th>
+                                <th class="px-4 py-3 text-left">Status</th>
+                                <th class="px-4 py-3 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="videosTableBody" class="divide-y divide-gray-200 bg-white">
+                            <!-- Dynamically loaded via script -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. Content Schedule Section -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 lg:col-span-1.5">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="mr-2">📅</span> Content Schedule
+                </h3>
+                <div id="scheduleList" class="space-y-3">
+                    <!-- Dynamically loaded -->
+                </div>
+            </div>
+
+            <!-- 5. Leads & Pipeline Metrics -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 lg:col-span-1.5">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="mr-2">📈</span> Leads & ROI Metrics
+                </h3>
+                <div id="leadsSection" class="space-y-4">
+                    <!-- Dynamically loaded -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- CONTRACT MODAL POPUP -->
+    <div id="contractModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 id="modalTitle" class="text-lg font-bold text-gray-900">Contract Title</h3>
+                <button onclick="closeContractModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+            </div>
+            <div id="modalBody" class="overflow-y-auto flex-grow text-sm text-gray-700 space-y-4 pr-2 bg-gray-50 p-4 rounded-lg border">
+                <!-- Contract text content goes here -->
+            </div>
+            <div class="border-t pt-4 mt-4 flex justify-end space-x-3">
+                <a id="downloadBtn" href="#" target="_blank" class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition">
+                    Download PDF Copy
+                </a>
+                <button onclick="closeContractModal()" class="px-4 py-2 bg-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-400 transition">
+                    Close
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- Contract 2 -->
-    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
-        <div>
-            <h4 class="font-semibold text-gray-800">Master Service Agreement & NDA (Sydney Agency)</h4>
-            <p class="text-sm text-green-600">✔ Signed & Verified (2025-10-15)</p>
-        </div>
-        <button onclick="openContractModal('Master Service Agreement & NDA (Sydney Agency)', '2025-10-15', 'msa')" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition">
-            View Contract
-        </button>
-    </div>
-</div>
+    <!-- JavaScript para sa pag-load ng data at pag-handle ng modal -->
+    <script>
+        // Contract Texts for Modal
+        const contractTexts = {
+            'addendum': `
+                <p><strong>Q3-Q4 INFLUENCER & CONTENT LICENSING ADDENDUM</strong></p>
+                <p>This Addendum is entered into and made effective as of January 10, 2026, by and between the Sydney Agency and the designated Creator/Contractor.</p>
+                <p><strong>1. Scope of Licensing:</strong> The Creator grants the Agency non-exclusive rights to distribute, edit, and promote short-form video assets across Meta and TikTok ad placements.</p>
+                <p><strong>2. Compensation & Terms:</strong> Retainer terms are locked in accordance with the primary Master Service Agreement. Deliverables include weekly reels and localized ad variants.</p>
+                <p><strong>3. Verification:</strong> This document has been digitally signed and verified by authorized representatives.</p>
+            `,
+            'msa': `
+                <p><strong>MASTER SERVICE AGREEMENT & NDA (SYDNEY AGENCY)</strong></p>
+                <p>Effective Date: October 15, 2025.</p>
+                <p><strong>1. Confidentiality:</strong> The Contractor agrees to maintain strict confidentiality regarding all client data, marketing analytics, and proprietary outreach frameworks.</p>
+                <p><strong>2. Independent Contractor Status:</strong> Services provided under this agreement are strictly on an independent contractor basis.</p>
+                <p><strong>3. Term & Termination:</strong> Either party may terminate the engagement with 30 days written notice. All pending milestones and invoices must be settled prior to offboarding.</p>
+            `
+        };
 
-<!-- MODAL POPUP HTML (Idagdag ito sa pinakadulo ng <body> ng index.html mo) -->
-<div id="contractModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
-        <div class="flex justify-between items-center border-b pb-3 mb-4">
-            <h3 id="modalTitle" class="text-lg font-bold text-gray-900">Contract Title</h3>
-            <button onclick="closeContractModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
-        </div>
-        <div id="modalBody" class="overflow-y-auto flex-grow text-sm text-gray-700 space-y-4 pr-2 bg-gray-50 p-4 rounded-lg border">
-            <!-- Dito papasok ang buong teksto ng kontrata -->
-        </div>
-        <div class="border-t pt-4 mt-4 flex justify-end space-x-3">
-            <a id="downloadBtn" href="#" target="_blank" class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition">
-                Download PDF Copy
-            </a>
-            <button onclick="closeContractModal()" class="px-4 py-2 bg-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-400 transition">
-                Close
-            </button>
-        </div>
-    </div>
-</div>
+        function openContractModal(title, date, type) {
+            document.getElementById('modalTitle').innerText = title + ' (' + date + ')';
+            document.getElementById('modalBody').innerHTML = contractTexts[type] || '<p>No contract details available.</p>';
+            
+            // Link para sa PDF download (Siguraduhing may ipapaskong file sa public/docs/ kung kinakailangan)
+            const downloadLink = document.getElementById('downloadBtn');
+            if (type === 'msa') {
+                downloadLink.href = '/docs/msa.pdf';
+            } else {
+                downloadLink.href = '/docs/addendum.pdf';
+            }
+
+            document.getElementById('contractModal').classList.remove('hidden');
+        }
+
+        function closeContractModal() {
+            document.getElementById('contractModal').classList.add('hidden');
+        }
+
+        // Fetch Data from Server API
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('/api/all-data');
+                const data = await response.json();
+
+                // 1. Invoice
+                if (data.invoice) {
+                    document.getElementById('invRef').innerText = data.invoice.invoiceRef || 'N/A';
+                    document.getElementById('invPeriod').innerText = data.invoice.billingPeriod || 'N/A';
+                    document.getElementById('invScope').innerText = data.invoice.scope || 'N/A';
+                    document.getElementById('invAmount').innerText = data.invoice.amount || 'N/A';
+                    document.getElementById('invStatus').innerText = data.invoice.status || 'Pending';
+                }
+
+                // 3. Videos Table
+                const videosTable = document.getElementById('videosTableBody');
+                videosTable.innerHTML = '';
+                if (data.videos && data.videos.length > 0) {
+                    data.videos.forEach(v => {
+                        let statusColor = v.status.includes('Approved') ? 'text-green-600 bg-green-50' : 'text-amber-600 bg-amber-50';
+                        videosTable.innerHTML += `
+                            <tr>
+                                <td class="px-4 py-3 font-medium text-gray-900">${v.title}</td>
+                                <td class="px-4 py-3"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${statusColor}">${v.status}</span></td>
+                                <td class="px-4 py-3 text-right">
+                                    <button onclick="updateVideoStatus(${v.id}, 'Approved ✓')" class="px-3 py-1 bg-emerald-600 text-white text-xs rounded hover:bg-emerald-700 mr-2">Approve</button>
+                                    <button onclick="updateVideoStatus(${v.id}, 'Revision Requested')" class="px-3 py-1 bg-gray-200 text-gray-700 text-xs rounded hover:bg-gray-300">Revise</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+
+                // 4. Schedule
+                const schedList = document.getElementById('scheduleList');
+                schedList.innerHTML = '';
+                if (data.schedule && data.schedule.length > 0) {
+                    data.schedule.forEach(s => {
+                        schedList.innerHTML += `
+                            <div class="p-3 bg-gray-50 rounded-lg border text-sm">
+                                <span class="text-xs font-bold text-blue-600 uppercase">${s.platform}</span>
+                                <p class="font-medium text-gray-800">${s.postTitle}</p>
+                                <p class="text-xs text-gray-500 mt-1">${s.scheduleDate}</p>
+                            </div>
+                        `;
+                    });
+                }
+
+                // 5. Leads
+                if (data.leads) {
+                    document.getElementById('leadsSection').innerHTML = `
+                        <div class="bg-gray-50 p-3 rounded-lg border">
+                            <p class="text-xs text-gray-500">Qualified Leads Generated</p>
+                            <p class="text-lg font-bold text-gray-900">${data.leads.qualifiedLeads || '0'}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg border">
+                            <p class="text-xs text-gray-500">Booked Calls</p>
+                            <p class="text-lg font-bold text-gray-900">${data.leads.bookedCalls || '0'}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg border">
+                            <p class="text-xs text-gray-500">Estimated Campaign ROI</p>
+                            <p class="text-lg font-bold text-emerald-600">${data.leads.roi || '0x'}</p>
+                        </div>
+                    `;
+                }
+
+            } catch (err) {
+                console.error('Error loading dashboard data:', err);
+            }
+        }
+
+        async function updateVideoStatus(id, status) {
+            await fetch('/api/video/status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, status })
+            });
+            loadDashboardData();
+        }
+
+        // Load data on page load
+        loadDashboardData();
+    </script>
+</body>
+</html>
