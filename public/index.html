@@ -91,7 +91,7 @@
                     <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-3">
                         <h3 class="text-base font-semibold text-white">Interactive Portal with Built-in Notes & Reminders</h3>
                         <p class="text-sm text-slate-400 leading-relaxed">
-                            Maaari na ngayong mag-iwan ng notes o remarks ang kliyente o team sa bawat invoice, kontrata, video asset, at task para mas maging convenient at flexible.
+                            Clients and team members can now leave notes or remarks on each invoice, contract, video asset, and task for greater convenience and flexibility.
                         </p>
                     </div>
                 </section>
@@ -552,7 +552,7 @@
 
         function editVideoNote(index) {
             let currentNotes = appData.videos[index].notes || '';
-            let newNote = prompt("Iwanan ang notes o instructions para sa video na ito:", currentNotes);
+            let newNote = prompt("Enter notes or instructions for this video:", currentNotes);
             if (newNote !== null) {
                 appData.videos[index].notes = newNote;
                 renderVideos();
