@@ -309,9 +309,9 @@
                 { id: 3, title: 'Brand Asset Upload & Organisation', notes: 'Synchronised securely from client Dropbox folder.', status: 'completed', assignee: 'Dropbox Sync', timestamp: '26 Aug 2026, 03:10 PM' }
             ],
             assets: [
-                { name: "Brand_Logo_2026.png", size: "2.4 MB", modified: "20 Aug 2026", type: "image/png", content: "Apex Media Agency Brand Logo Asset Placeholder" },
-                { name: "Product_Demo_Final.mp4", size: "45.1 MB", modified: "25 Aug 2026", type: "video/mp4", content: "Apex Media Agency Video Asset Placeholder" },
-                { name: "Guidelines.pdf", size: "1.1 MB", modified: "15 Aug 2026", type: "application/pdf", content: "APEX MEDIA AGENCY - BRAND GUIDELINES\n\n1. Typography: Helvetica / Inter\n2. Primary Color: Deep Blue (#2563EB)\n3. Tone: Professional, authoritative, Australian English standard.\n4. Jurisdiction: Sydney, New South Wales, Australia." }
+                { name: "Brand_Logo_2026.png", size: "2.4 MB", modified: "20 Aug 2026", type: "image/png", isBase64: false, content: "Apex Media Agency Brand Logo Asset Placeholder" },
+                { name: "Product_Demo_Final.mp4", size: "45.1 MB", modified: "25 Aug 2026", type: "video/mp4", isBase64: false, content: "Apex Media Agency Video Asset Placeholder" },
+                { name: "Guidelines.pdf", size: "1.1 MB", modified: "15 Aug 2026", type: "application/pdf", isBase64: false, content: "APEX MEDIA AGENCY - BRAND GUIDELINES\n\n1. Typography: Helvetica / Inter\n2. Primary Color: Deep Blue (#2563EB)\n3. Tone: Professional, authoritative, Australian English standard.\n4. Jurisdiction: Sydney, New South Wales, Australia." }
             ]
         };
 
@@ -698,15 +698,27 @@
 
         function downloadAsset(index) {
             let file = appData.assets[index];
-            let mimeType = file.type || 'text/plain';
-            let fileContent = file.content || `Apex Media Agency - Certified Asset Record\nFile Name: ${file.name}\nSize: ${file.size}\nModified: ${file.modified}\nJurisdiction: Sydney, Australia`;
-            
-            // Kung PDF, ayusin ang tamang format para hindi mag-error ang PDF viewer
-            if (file.name.endsWith('.pdf')) {
-                mimeType = 'application/pdf';
+            let blob;
+
+            if (file.isBase64) {
+                // I-convert pabalik ang base64 dataURL sa binary Blob para hindi masira ang PDF/Images/Videos
+                let arr = file.content.split(',');
+                let mime = arr[0].match(/:(.*?);/)[1];
+                let bstr = atob(arr[1]);
+                let n = bstr.length;
+                let u8arr = new Uint8Array(n);
+                while (n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                blob = new Blob([u8arr], { type: mime });
+            } else {
+                let mimeType = file.type || 'text/plain';
+                if (file.name.endsWith('.pdf')) {
+                    mimeType = 'application/pdf';
+                }
+                blob = new Blob([file.content], { type: mimeType });
             }
 
-            const blob = new Blob([fileContent], { type: mimeType });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -731,25 +743,23 @@
             let fileSizeMB = (uploadedFile.size / (1024 * 1024)).toFixed(1) + ' MB';
             let todayStr = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
 
-            // Basahin ang file para maging maayos ang downloadable blob pagka-download
             const reader = new FileReader();
+            
+            // Gamitin ang readAsDataURL para sa lahat ng uri ng file para masigurong buo ang nilalaman ng PDF, Resume, o Images
             reader.onload = function(e) {
                 appData.assets.unshift({
                     name: uploadedFile.name,
                     size: fileSizeMB,
                     modified: todayStr,
                     type: uploadedFile.type,
+                    isBase64: true,
                     content: e.target.result
                 });
                 loadDropboxAssets();
-                alert(`File "${uploadedFile.name}" has been successfully uploaded to your Dropbox brand folder and is now visible below.`);
+                alert(`File "${uploadedFile.name}" has been successfully uploaded to your Dropbox brand folder and is now ready for download.`);
             };
             
-            if (uploadedFile.type.includes('text') || uploadedFile.name.endsWith('.pdf') || uploadedFile.name.endsWith('.txt')) {
-                reader.readAsText(uploadedFile);
-            } else {
-                reader.readAsDataURL(uploadedFile);
-            }
+            reader.readAsDataURL(uploadedFile);
 
             // Reset input
             event.target.value = '';
