@@ -3,525 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Media Agency | Interactive Client Portal (Sydney)</title>
+    <title>Video Assets & Feedback Approvals</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-slate-900 text-slate-100 font-sans antialiased p-6">
 
-    <div class="flex h-screen overflow-hidden">
-        
-        <!-- SIDEBAR NAVIGATION -->
-        <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between hidden md:flex">
+    <div class="max-w-6xl mx-auto space-y-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
             <div>
-                <div class="p-6 border-b border-slate-800">
-                    <h1 class="text-lg font-bold text-white tracking-wide flex items-center gap-2">
-                        <i class="fa-solid fa-layer-group text-blue-500"></i> APEX MEDIA <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">SYDNEY</span>
-                    </h1>
-                    <p class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-circle text-emerald-500 text-[10px]"></i> Office Online (AEST)</p>
-                </div>
-
-                <nav class="p-4 space-y-1 text-sm font-medium">
-                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-blue-400 bg-blue-500/10 transition"><i class="fa-solid fa-chart-pie w-5"></i> Dashboard</button>
-                    <button onclick="switchTab('invoices')" id="nav-invoices" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-file-invoice-dollar w-5"></i> Invoicing & Payments</button>
-                    <button onclick="switchTab('contracts')" id="nav-contracts" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-file-signature w-5"></i> Contracts & Signatures</button>
-                    <button onclick="switchTab('approvals')" id="nav-approvals" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-clapperboard w-5"></i> Video Approvals</button>
-                    <button onclick="switchTab('calendar')" id="nav-calendar" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-calendar-days w-5"></i> Content Calendar</button>
-                    <button onclick="switchTab('tasks')" id="nav-tasks" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-list-check w-5"></i> Tasks & Projects</button>
-                    <button onclick="switchTab('pipeline')" id="nav-pipeline" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-people-arrows w-5"></i> Lead Pipeline</button>
-                    <button onclick="switchTab('assets')" id="nav-assets" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition"><i class="fa-solid fa-folder-open w-5"></i> Brand Assets (Dropbox)</button>
-                </nav>
+                <h1 class="text-xl font-bold text-white"><i class="fa-solid fa-clapperboard text-blue-500 mr-2"></i> Video Assets & Feedback Approvals</h1>
+                <p class="text-xs text-slate-400 mt-1">Review, approve, or request revisions for ongoing video deliverables.</p>
             </div>
+            <button onclick="addNewVideo()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> Add Video Asset
+            </button>
+        </div>
 
-            <div class="p-4 border-t border-slate-800 bg-slate-900/50">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-sm">SM</div>
-                    <div class="overflow-hidden">
-                        <p class="text-xs font-semibold text-white">Sam Mondigo</p>
-                        <p class="text-[10px] text-blue-400 truncate">Dedicated Campaign Lead</p>
-                    </div>
-                </div>
-            </div>
-        </aside>
-
-        <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-            <header class="h-16 border-b border-slate-800 bg-slate-950/80 backdrop-blur px-8 flex items-center justify-between sticky top-0 z-20">
-                <div class="flex items-center gap-4">
-                    <span id="current-page-title" class="text-lg font-semibold text-white">Dashboard Overview</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <!-- LIVE CLOCK DISPLAY -->
-                    <div id="live-clock" class="text-xs font-mono bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800 text-blue-400 flex items-center gap-2">
-                        <i class="fa-regular fa-clock"></i> <span id="clock-text">Loading time...</span>
-                    </div>
-                    <span class="text-xs bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 text-slate-300 hidden sm:inline">
-                        <i class="fa-brands fa-dropbox text-blue-400 mr-1.5"></i> Dropbox & MYOB Connected
-                    </span>
-                    <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700 font-semibold text-xs">
-                        ACME
-                    </div>
-                </div>
-            </header>
-
-            <div class="p-8 max-w-7xl mx-auto w-full space-y-6">
-
-                <!-- 1. DASHBOARD -->
-                <section id="tab-dashboard" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
-                            <p class="text-xs text-slate-400 font-medium">Active Retainer (MYOB)</p>
-                            <h3 class="text-2xl font-bold text-white mt-1">$4,850 <span class="text-xs text-emerald-400 font-normal">AUD / mo</span></h3>
-                        </div>
-                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
-                            <p class="text-xs text-slate-400 font-medium">Pending Approvals</p>
-                            <h3 class="text-2xl font-bold text-amber-400 mt-1">2 Reels</h3>
-                        </div>
-                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
-                            <p class="text-xs text-slate-400 font-medium">Tasks in Progress</p>
-                            <h3 class="text-2xl font-bold text-blue-400 mt-1" id="dash-task-count">3 Items</h3>
-                        </div>
-                        <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
-                            <p class="text-xs text-slate-400 font-medium">Campaign ROI</p>
-                            <h3 class="text-2xl font-bold text-emerald-400 mt-1">5.4x</h3>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-3">
-                        <h3 class="text-base font-semibold text-white">Interactive Portal with Built-in Notes & Reminders</h3>
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            Maaari na ngayong mag-iwan ng notes o remarks ang kliyente o team sa bawat invoice, kontrata, video asset, at task para mas maging convenient at flexible.
-                        </p>
-                    </div>
-                </section>
-
-                <!-- 2. INVOICING & PAYMENTS -->
-                <section id="tab-invoices" class="space-y-6 hidden">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">Invoicing & Payments (MYOB Synced)</h2>
-                        <button onclick="openInvoiceModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-plus mr-1.5"></i> Add New Invoice</button>
-                    </div>
-                    <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden">
-                        <table class="w-full text-left border-collapse text-sm">
-                            <thead class="bg-slate-900 border-b border-slate-800 text-slate-400">
-                                <tr>
-                                    <th class="p-4 font-medium">Invoice ID & Notes</th>
-                                    <th class="p-4 font-medium">Description</th>
-                                    <th class="p-4 font-medium">Amount (AUD)</th>
-                                    <th class="p-4 font-medium">Timestamp</th>
-                                    <th class="p-4 font-medium">Status</th>
-                                    <th class="p-4 font-medium text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="invoice-table-body" class="divide-y divide-slate-800">
-                                <!-- Dynamically loaded -->
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- 3. CONTRACTS & SIGNATURES -->
-                <section id="tab-contracts" class="space-y-6 hidden">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">Client Agreements & Contracts</h2>
-                    </div>
-                    <div id="contracts-container" class="space-y-4">
-                        <!-- Dynamically loaded -->
-                    </div>
-                </section>
-
-                <!-- 4. VIDEO APPROVALS -->
-                <section id="tab-approvals" class="space-y-6 hidden">
-                    <h2 class="text-xl font-bold text-white">Video Assets & Feedback Approvals</h2>
-                    <div id="videos-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Dynamically loaded -->
-                    </div>
-                </section>
-
-                <!-- 5. CONTENT CALENDAR -->
-                <section id="tab-calendar" class="space-y-6 hidden">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">Content Calendars & Posting Schedules</h2>
-                        <button onclick="downloadPDF('CONTENT CALENDAR & SCHEDULE REPORT\n' + JSON.stringify(appData.calendar, null, 2))" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs"><i class="fa-solid fa-download mr-1"></i> Export Schedule PDF</button>
-                    </div>
-                    <div id="calendar-container" class="space-y-3"></div>
-                </section>
-
-                <!-- 6. TASKS & PROJECTS -->
-                <section id="tab-tasks" class="space-y-6 hidden">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">Task & Project Management</h2>
-                        <button onclick="openTaskModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-plus mr-1.5"></i> Add New Task</button>
-                    </div>
-                    <div id="tasks-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Dynamically loaded -->
-                    </div>
-                </section>
-
-                <!-- 7. LEAD PIPELINE -->
-                <section id="tab-pipeline" class="space-y-6 hidden">
-                    <h2 class="text-xl font-bold text-white">Lead Pipeline & Client Onboarding</h2>
-                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-center">
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <p class="text-xs text-slate-400">New Inquiries</p>
-                                <h4 class="text-xl font-bold text-white mt-1">24</h4>
-                            </div>
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <p class="text-xs text-slate-400">Discovery Call</p>
-                                <h4 class="text-xl font-bold text-blue-400 mt-1">9</h4>
-                            </div>
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <p class="text-xs text-slate-400">Proposal Sent</p>
-                                <h4 class="text-xl font-bold text-amber-400 mt-1">5</h4>
-                            </div>
-                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800">
-                                <p class="text-xs text-slate-400">Onboarded Clients</p>
-                                <h4 class="text-xl font-bold text-emerald-400 mt-1">12</h4>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 8. BRAND ASSETS (DROPBOX) -->
-                <section id="tab-assets" class="space-y-6 hidden">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">File & Brand Asset Storage (Dropbox Connected)</h2>
-                        <button onclick="alert('Dropbox file upload simulator: File uploaded successfully at ' + new Date().toLocaleTimeString())" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs transition"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload Asset</button>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-folder text-blue-400 text-2xl"></i>
-                                <div>
-                                    <h3 class="text-sm font-semibold text-white">Brand Logos & Guidelines</h3>
-                                    <p class="text-[10px] text-slate-400">Synced via Dropbox</p>
-                                </div>
-                            </div>
-                            <button onclick="downloadPDF('Folder: Brand Logos & Guidelines\nSynced securely via Dropbox.')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-download"></i></button>
-                        </div>
-                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-folder text-blue-400 text-2xl"></i>
-                                <div>
-                                    <h3 class="text-sm font-semibold text-white">Raw Footage & B-Roll</h3>
-                                    <p class="text-[10px] text-slate-400">Synced via Dropbox</p>
-                                </div>
-                            </div>
-                            <button onclick="downloadPDF('Folder: Raw Footage & B-Roll\nSynced securely via Dropbox.')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-download"></i></button>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- MODAL FOR ADD/EDIT INVOICE -->
-    <div id="invoiceModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-md w-full space-y-4">
-            <h3 id="invoiceModalTitle" class="text-lg font-bold text-white">Add New Invoice</h3>
-            <input type="hidden" id="invEditIndex" value="-1">
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Invoice ID</label>
-                <input type="text" id="invIdInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="INV-2026-090">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Description</label>
-                <input type="text" id="invDescInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="Social Media Management">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Amount (AUD)</label>
-                <input type="text" id="invAmountInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="$4,850.00">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Client Notes / Remarks</label>
-                <textarea id="invNotesInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-20" placeholder="Iwanan ang notes o instructions dito..."></textarea>
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Status</label>
-                <select id="invStatusInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1">
-                    <option value="Pending Payment">Pending Payment</option>
-                    <option value="Paid">Paid</option>
-                </select>
-            </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeInvoiceModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded text-xs font-semibold">Cancel</button>
-                <button onclick="saveInvoice()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-xs font-semibold">Save Invoice</button>
-            </div>
+        <!-- Videos Grid Container -->
+        <div id="videos-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Dynamic Video Cards will be inserted here -->
         </div>
     </div>
 
-    <!-- MODAL FOR EDIT CONTRACT -->
-    <div id="contractModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-lg w-full space-y-4">
-            <h3 class="text-lg font-bold text-white">Edit Contract / Agreement</h3>
-            <input type="hidden" id="contractEditIndex" value="-1">
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Contract Title</label>
-                <input type="text" id="contractTitleInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Agreement Terms & Details</label>
-                <textarea id="contractTextInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-32"></textarea>
-            </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeContractModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded text-xs font-semibold">Cancel</button>
-                <button onclick="saveContract()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-xs font-semibold">Save Changes</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL FOR ADD/EDIT TASK -->
-    <div id="taskModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-md w-full space-y-4">
-            <h3 class="text-lg font-bold text-white">Add New Task</h3>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Task Title</label>
-                <input type="text" id="taskTitleInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="Setup Meta CAPI">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Notes / Instructions</label>
-                <textarea id="taskNotesInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1 h-20" placeholder="Maglagay ng example o notes para hindi makalimutan..."></textarea>
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Status / Column</label>
-                <select id="taskStatusInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1">
-                    <option value="backlog">Backlog / To-Do</option>
-                    <option value="progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                </select>
-            </div>
-            <div>
-                <label class="text-xs text-slate-400 font-medium">Assignee</label>
-                <input type="text" id="taskAssigneeInput" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-white mt-1" placeholder="Tech Team">
-            </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeTaskModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded text-xs font-semibold">Cancel</button>
-                <button onclick="saveTask()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-xs font-semibold">Save Task</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT APP LOGIC -->
+    <!-- JavaScript Implementation -->
     <script>
-        // Live Clock Function
-        function updateLiveClock() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            const dateString = now.toLocaleDateString('en-AU', { month: 'short', day: 'numeric', year: 'numeric' });
-            document.getElementById('clock-text').innerText = `${dateString} • ${timeString} AEST`;
-        }
-        setInterval(updateLiveClock, 1000);
-        updateLiveClock();
-
-        // Main Application State Data with Notes
+        // Mock Data Storage
         let appData = {
-            invoices: [
-                { id: 'INV-2026-088', desc: 'August Social Media Retainer & Ads', amount: '$4,850.00', notes: 'Include MYOB direct bank transfer receipt upon payment.', timestamp: 'Aug 27, 2026, 09:15 AM', status: 'Pending Payment' },
-                { id: 'INV-2026-071', desc: 'July Social Media Retainer', amount: '$4,850.00', notes: 'Settled via corporate wire transfer.', timestamp: 'Jul 27, 2026, 10:00 AM', status: 'Paid' }
-            ],
-            contracts: [
-                { title: 'Master Service Agreement (MSA) - FY2026-2027', date: 'October 15, 2025', timestamp: 'Oct 15, 2025, 02:30 PM', text: '1. PARTIES: Apex Media Agency (Sydney, Australia) and Client Partner.\n2. SCOPE: Short-form video creation, campaign scheduling, lead generation.\n3. TERMS: Net-30 via MYOB settlement.' },
-                { title: 'Q3-Q4 Influencer & Content Licensing Addendum', date: 'January 10, 2026', timestamp: 'Jan 10, 2026, 11:00 AM', text: '1. LICENSING: Creator grants non-exclusive distribution rights across Meta & TikTok.\n2. COMPENSATION: Locked per retainer agreement.' }
-            ],
             videos: [
-                { title: 'Reel #12 - Bondi Beach Lifestyle Promo (v2)', notes: 'Please check hook timing and brighten the lighting at 0:03.', status: 'Revision Requested', timestamp: 'Aug 26, 2026, 04:45 PM', file: 'Reel_12_Bondi.mp4' },
-                { title: 'Client UGC Testimonial - Sydney CBD Shoot', notes: 'Approved for paid ad scaling.', status: 'Approved ✓', timestamp: 'Aug 25, 2026, 01:20 PM', file: 'UGC_Sydney.mp4' }
-            ],
-            calendar: [
-                { date: 'Aug 30, 2026', title: 'Behind-the-Scenes Reel: Sydney Office Launch', platform: 'Instagram', status: 'Scheduled' },
-                { date: 'Sep 02, 2026', title: 'Top 3 Social Media Mistakes', platform: 'TikTok', status: 'Pending Approval' }
-            ],
-            tasks: [
-                { id: 1, title: 'Setup Meta Pixel & CAPI', notes: 'Verify domain ownership in Business Manager first.', status: 'backlog', assignee: 'Tech Team', timestamp: 'Aug 27, 2026, 08:00 AM' },
-                { id: 2, title: 'Edit Q4 Campaign Reels', notes: 'Use dynamic captions and Sydney agency branding style.', status: 'progress', assignee: 'Video Editor', timestamp: 'Aug 27, 2026, 09:30 AM' },
-                { id: 3, title: 'Brand Asset Upload & Organization', notes: 'Synced securely from client Dropbox folder.', status: 'completed', assignee: 'Dropbox Sync', timestamp: 'Aug 26, 2026, 03:10 PM' }
+                {
+                    file: "Reel_12_Bondi.mp4",
+                    title: "Reel #12 - Bondi Beach Lifestyle Promo (v2)",
+                    status: "Revision Requested",
+                    notes: "Please check hook timing and brighten the lighting at 0:03.",
+                    timestamp: "Aug 26, 2026, 04:45 PM"
+                },
+                {
+                    file: "UGC_Sydney.mp4",
+                    title: "Client UGC Testimonial - Sydney CBD Shoot",
+                    status: "Approved ✓",
+                    notes: "Approved for paid ad scaling.",
+                    timestamp: "Aug 25, 2026, 01:20 PM"
+                }
             ]
         };
 
-        function switchTab(tabId) {
-            const tabs = ['dashboard', 'invoices', 'contracts', 'approvals', 'calendar', 'tasks', 'pipeline', 'assets'];
-            
-            const titles = {
-                'dashboard': 'Dashboard Overview',
-                'invoices': 'Invoicing & Payments',
-                'contracts': 'Contracts & Signatures',
-                'approvals': 'Video Approvals & Feedback',
-                'calendar': 'Content Calendar',
-                'tasks': 'Tasks & Project Management',
-                'pipeline': 'Lead Pipeline & Onboarding',
-                'assets': 'Brand Assets & Storage'
-            };
-
-            tabs.forEach(t => {
-                document.getElementById('tab-' + t).classList.add('hidden');
-                const btn = document.getElementById('nav-' + t);
-                if(btn) btn.className = "w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition";
-            });
-
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            const activeBtn = document.getElementById('nav-' + tabId);
-            if(activeBtn) activeBtn.className = "w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-blue-400 bg-blue-500/10 transition";
-
-            document.getElementById('current-page-title').innerText = titles[tabId] || 'Client Portal';
-
-            renderAll();
-        }
-
-        function renderAll() {
-            renderInvoices();
-            renderContracts();
-            renderVideos();
-            renderCalendar();
-            renderTasks();
-        }
-
-        // --- INVOICE FUNCTIONS ---
-        function renderInvoices() {
-            const tbody = document.getElementById('invoice-table-body');
-            tbody.innerHTML = '';
-            appData.invoices.forEach((inv, index) => {
-                let statusBadge = inv.status === 'Paid' 
-                    ? '<span class="bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full text-xs border border-emerald-500/25">Paid</span>'
-                    : '<span class="bg-amber-500/10 text-amber-400 px-2.5 py-1 rounded-full text-xs border border-amber-500/25">Pending Payment</span>';
-                
-                tbody.innerHTML += `
-                    <tr class="align-top">
-                        <td class="p-4">
-                            <span class="font-mono text-blue-400 font-semibold">${inv.id}</span>
-                            <p class="text-xs text-slate-400 mt-1 italic">📝 ${inv.notes || 'No notes added.'}</p>
-                        </td>
-                        <td class="p-4">${inv.desc}</td>
-                        <td class="p-4 font-semibold">${inv.amount}</td>
-                        <td class="p-4 text-xs font-mono text-slate-400">${inv.timestamp}</td>
-                        <td class="p-4">${statusBadge}</td>
-                        <td class="p-4 text-right space-x-2">
-                            <button onclick="downloadPDF('INVOICE RECORD\\nID: ${inv.id}\\nDescription: ${inv.desc}\\nAmount: ${inv.amount} AUD\\nNotes: ${inv.notes}\\nTimestamp: ${inv.timestamp}\\nStatus: ${inv.status}')" class="text-blue-400 hover:text-blue-300 text-xs" title="Download PDF"><i class="fa-solid fa-download"></i></button>
-                            <button onclick="editInvoice(${index})" class="text-slate-400 hover:text-white text-xs" title="Edit"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="deleteInvoice(${index})" class="text-rose-400 hover:text-rose-300 text-xs" title="Delete"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        function openInvoiceModal(index = -1) {
-            document.getElementById('invEditIndex').value = index;
-            if (index >= 0) {
-                let inv = appData.invoices[index];
-                document.getElementById('invoiceModalTitle').innerText = "Edit Invoice";
-                document.getElementById('invIdInput').value = inv.id;
-                document.getElementById('invDescInput').value = inv.desc;
-                document.getElementById('invAmountInput').value = inv.amount;
-                document.getElementById('invNotesInput').value = inv.notes || '';
-                document.getElementById('invStatusInput').value = inv.status;
-            } else {
-                document.getElementById('invoiceModalTitle').innerText = "Add New Invoice";
-                document.getElementById('invIdInput').value = '';
-                document.getElementById('invDescInput').value = '';
-                document.getElementById('invAmountInput').value = '';
-                document.getElementById('invNotesInput').value = '';
-                document.getElementById('invStatusInput').value = 'Pending Payment';
-            }
-            document.getElementById('invoiceModal').classList.remove('hidden');
-        }
-
-        function closeInvoiceModal() {
-            document.getElementById('invoiceModal').classList.add('hidden');
-        }
-
-        function saveInvoice() {
-            let index = parseInt(document.getElementById('invEditIndex').value);
-            let nowTime = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-            let newInv = {
-                id: document.getElementById('invIdInput').value || 'INV-2026-999',
-                desc: document.getElementById('invDescInput').value || 'Service Retainer',
-                amount: document.getElementById('invAmountInput').value || '$1,000.00',
-                notes: document.getElementById('invNotesInput').value || '',
-                timestamp: nowTime,
-                status: document.getElementById('invStatusInput').value
-            };
-
-            if (index >= 0) {
-                newInv.timestamp = appData.invoices[index].timestamp;
-                appData.invoices[index] = newInv;
-            } else {
-                appData.invoices.push(newInv);
-            }
-            closeInvoiceModal();
-            renderInvoices();
-        }
-
-        function editInvoice(index) {
-            openInvoiceModal(index);
-        }
-
-        function deleteInvoice(index) {
-            if (confirm("Are you sure you want to delete this invoice?")) {
-                appData.invoices.splice(index, 1);
-                renderInvoices();
-            }
-        }
-
-        // --- CONTRACTS FUNCTIONS ---
-        function renderContracts() {
-            const container = document.getElementById('contracts-container');
-            container.innerHTML = '';
-            appData.contracts.forEach((c, index) => {
-                let safeText = c.text.replace(/\n/g, '\\n').replace(/"/g, '&quot;');
-                
-                container.innerHTML += `
-                    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
-                        <div class="flex justify-between items-start border-b border-slate-800 pb-4">
-                            <div>
-                                <h3 class="font-semibold text-white">${c.title}</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Signed Timestamp: <span class="font-mono text-blue-400">${c.timestamp}</span> • Sydney, NSW Jurisdiction</p>
-                            </div>
-                            <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded text-xs border border-emerald-500/25"><i class="fa-solid fa-check mr-1"></i> Executed</span>
-                        </div>
-                        <div class="bg-slate-900 p-4 rounded-lg text-xs text-slate-300 font-mono leading-relaxed border border-slate-800 whitespace-pre-line">${c.text}</div>
-                        <div class="flex justify-end gap-2 pt-2">
-                            <button onclick="editContract(${index})" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-pen mr-1.5"></i> Edit Contract</button>
-                            <button onclick="downloadContractPDF('${c.title}', '${c.timestamp}', '${safeText}')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-download mr-1.5"></i> Download PDF Copy</button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function editContract(index) {
-            document.getElementById('contractEditIndex').value = index;
-            let c = appData.contracts[index];
-            document.getElementById('contractTitleInput').value = c.title;
-            document.getElementById('contractTextInput').value = c.text;
-            document.getElementById('contractModal').classList.remove('hidden');
-        }
-
-        function closeContractModal() {
-            document.getElementById('contractModal').classList.add('hidden');
-        }
-
-        function saveContract() {
-            let index = parseInt(document.getElementById('contractEditIndex').value);
-            if (index >= 0) {
-                appData.contracts[index].title = document.getElementById('contractTitleInput').value;
-                appData.contracts[index].text = document.getElementById('contractTextInput').value;
-                appData.contracts[index].timestamp = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-            }
-            closeContractModal();
-            renderContracts();
-        }
-
-        // --- VIDEO APPROVALS FUNCTIONS ---
+        // Render Videos Function
         function renderVideos() {
             const container = document.getElementById('videos-container');
             container.innerHTML = '';
+            
             appData.videos.forEach((v, idx) => {
-                let badgeColor = v.status.includes('Approved') ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/25' : 'text-amber-400 bg-amber-500/10 border-amber-500/25';
+                let badgeColor = v.status.includes('Approved') 
+                    ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/25' 
+                    : 'text-amber-400 bg-amber-500/10 border-amber-500/25';
+                
                 container.innerHTML += `
-                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4 flex flex-col justify-between">
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4 flex flex-col justify-between shadow-lg">
                         <div>
                             <div class="bg-slate-900 rounded-lg h-36 flex items-center justify-center border border-slate-800 relative mb-3">
                                 <i class="fa-solid fa-play text-3xl text-blue-500"></i>
@@ -531,25 +72,44 @@
                             <h3 class="font-semibold text-white text-sm">${v.title}</h3>
                             <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800 text-xs text-slate-300 mt-2">
                                 <span class="text-blue-400 font-semibold">Notes / Feedback:</span> 
-                                <p class="mt-0.5 italic text-slate-400" id="video-note-${idx}">${v.notes || 'No notes yet. Click edit to add.'}</p>
+                                <p class="mt-0.5 italic text-slate-400">${v.notes || 'No notes yet. Click request revision to add comments.'}</p>
                             </div>
                             <p class="text-[11px] font-mono text-slate-500 mt-2"><i class="fa-regular fa-clock mr-1"></i> Logged: ${v.timestamp}</p>
                         </div>
                         <div class="flex gap-2 pt-2 border-t border-slate-800">
                             <button onclick="updateVideoStatus(${idx}, 'Approved ✓')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded text-xs font-semibold transition">Approve</button>
-                            <button onclick="editVideoNote(${idx})" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded text-xs font-semibold transition" title="Edit Notes"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="requestVideoRevision(${idx})" class="flex-1 bg-amber-600/80 hover:bg-amber-600 text-white py-2 rounded text-xs font-semibold transition flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-rotate-left"></i> Request Revision
+                            </button>
+                            <button onclick="editVideoNote(${idx})" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded text-xs font-semibold transition" title="Edit Notes">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
                         </div>
                     </div>
                 `;
             });
         }
 
+        // Update Status (Approve)
         function updateVideoStatus(index, status) {
             appData.videos[index].status = status;
-            appData.videos[index].timestamp = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            appData.videos[index].timestamp = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             renderVideos();
         }
 
+        // Request Revision with Prompt Box
+        function requestVideoRevision(index) {
+            let currentNotes = appData.videos[index].notes || '';
+            let revisionComment = prompt("Ilagay ang iyong revision notes o feedback para sa video na ito:", currentNotes);
+            if (revisionComment !== null && revisionComment.trim() !== "") {
+                appData.videos[index].notes = revisionComment;
+                appData.videos[index].status = "Revision Requested";
+                appData.videos[index].timestamp = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                renderVideos();
+            }
+        }
+
+        // Edit Notes Manually
         function editVideoNote(index) {
             let currentNotes = appData.videos[index].notes || '';
             let newNote = prompt("Iwanan ang notes o instructions para sa video na ito:", currentNotes);
@@ -559,156 +119,23 @@
             }
         }
 
-        // --- CALENDAR FUNCTIONS ---
-        function renderCalendar() {
-            const container = document.getElementById('calendar-container');
-            container.innerHTML = '';
-            appData.calendar.forEach(cal => {
-                container.innerHTML += `
-                    <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 flex items-center justify-between text-sm">
-                        <div class="flex items-center gap-3">
-                            <span class="text-xs bg-blue-500/20 text-blue-400 px-2.5 py-1 rounded font-mono">${cal.date}</span>
-                            <div>
-                                <p class="font-semibold text-white">${cal.title}</p>
-                                <p class="text-xs text-slate-400">${cal.platform}</p>
-                            </div>
-                        </div>
-                        <span class="text-xs text-emerald-400">${cal.status}</span>
-                    </div>
-                `;
-            });
-        }
-
-        // --- TASKS FUNCTIONS ---
-        function renderTasks() {
-            const container = document.getElementById('tasks-container');
-            container.innerHTML = `
-                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2">Backlog</h3>
-                    <div id="col-backlog" class="space-y-2"></div>
-                </div>
-                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 border-b border-slate-800 pb-2">In Progress</h3>
-                    <div id="col-progress" class="space-y-2"></div>
-                </div>
-                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 border-b border-slate-800 pb-2">Completed</h3>
-                    <div id="col-completed" class="space-y-2"></div>
-                </div>
-            `;
-
-            let counts = { backlog: 0, progress: 0, completed: 0 };
-            appData.tasks.forEach((t, idx) => {
-                counts[t.status]++;
-                let col = document.getElementById('col-' + t.status);
-                if (col) {
-                    col.innerHTML += `
-                        <div class="bg-slate-900 p-3 rounded border border-slate-800 text-xs space-y-1.5 relative group">
-                            <button onclick="deleteTask(${idx})" class="absolute top-2 right-2 text-rose-400 hover:text-rose-300"><i class="fa-solid fa-xmark"></i></button>
-                            <p class="font-semibold text-white pr-4">${t.title}</p>
-                            <p class="text-slate-400 italic">📝 ${t.notes || 'No notes'}</p>
-                            <p class="text-slate-400">Assigned: ${t.assignee}</p>
-                            <p class="text-[10px] font-mono text-blue-400"><i class="fa-regular fa-clock"></i> ${t.timestamp}</p>
-                        </div>
-                    `;
-                }
-            });
-            document.getElementById('dash-task-count').innerText = counts.progress + ' Items';
-        }
-
-        function openTaskModal() {
-            document.getElementById('taskTitleInput').value = '';
-            document.getElementById('taskNotesInput').value = '';
-            document.getElementById('taskModal').classList.remove('hidden');
-        }
-
-        function closeTaskModal() {
-            document.getElementById('taskModal').classList.add('hidden');
-        }
-
-        function saveTask() {
-            let title = document.getElementById('taskTitleInput').value;
-            if (!title) return;
-            let nowTime = new Date().toLocaleString('en-AU', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-            appData.tasks.push({
-                id: Date.now(),
-                title: title,
-                notes: document.getElementById('taskNotesInput').value || '',
-                status: document.getElementById('taskStatusInput').value,
-                assignee: document.getElementById('taskAssigneeInput').value || 'Agency Team',
-                timestamp: nowTime
-            });
-            closeTaskModal();
-            renderTasks();
-        }
-
-        function deleteTask(index) {
-            appData.tasks.splice(index, 1);
-            renderTasks();
-        }
-
-        // --- GLOBAL PDF DOWNLOAD GENERATORS ---
-        function downloadPDF(contentData) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(15);
-            doc.text("APEX MEDIA AGENCY - SYDNEY, AUSTRALIA", 20, 20);
-            
-            doc.setFont("Helvetica", "normal");
-            doc.setFontSize(10);
-            doc.text("Official Portal Certified Copy with Notes & Timestamps", 20, 27);
-            
-            doc.setLineWidth(0.4);
-            doc.line(20, 31, 190, 31);
-
-            doc.setFont("Courier", "normal");
-            doc.setFontSize(10);
-            
-            const splitText = doc.splitTextToSize(contentData, 170);
-            doc.text(splitText, 20, 42);
-
-            doc.setFont("Helvetica", "italic");
-            doc.setFontSize(8);
-            doc.text("Generated securely via Apex Client Portal & MYOB/Dropbox Sync.", 20, 280);
-
-            doc.save("Apex_Agency_Record.pdf");
-        }
-
-        function downloadContractPDF(title, timestamp, textContent) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(14);
-            doc.text("APEX MEDIA AGENCY - SYDNEY, AUSTRALIA", 20, 20);
-            
-            doc.setFont("Helvetica", "normal");
-            doc.setFontSize(10);
-            doc.text(title, 20, 28);
-            doc.text(`Signed Timestamp: ${timestamp} • Sydney, NSW Jurisdiction`, 20, 34);
-            
-            doc.setLineWidth(0.4);
-            doc.line(20, 40, 190, 40);
-
-            doc.setFont("Courier", "normal");
-            doc.setFontSize(10);
-            
-            let formattedText = textContent.replace(/\\n/g, '\n').replace(/&quot;/g, '"');
-            const splitText = doc.splitTextToSize(formattedText, 170);
-            doc.text(splitText, 20, 50);
-
-            doc.setFont("Helvetica", "italic");
-            doc.setFontSize(8);
-            doc.text("Generated securely via Apex Client Portal & MYOB/Dropbox Sync.", 20, 280);
-
-            let fileName = title.replace(/[^a-zA-Z0-9]/g, '_') + ".pdf";
-            doc.save(fileName);
+        // Optional helper to add dummy test video
+        function addNewVideo() {
+            let title = prompt("Ilagay ang Video Title:");
+            if(title) {
+                appData.videos.push({
+                    file: "Sample_Video.mp4",
+                    title: title,
+                    status: "Pending Review",
+                    notes: "Newly uploaded asset.",
+                    timestamp: new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+                });
+                renderVideos();
+            }
         }
 
         // Initial Load
-        renderAll();
+        renderVideos();
     </script>
 </body>
 </html>
